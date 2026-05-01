@@ -73,7 +73,7 @@ export function ShapePractice() {
     if (!current) pickNext();
   }, [current, pickNext]);
 
-  const display = current ? current.shape : "";
+  const display = current ? current.letter : "";
 
   const handleReset = () => {
     letterStats.current = {};
@@ -89,6 +89,7 @@ export function ShapePractice() {
       <QuizCard
         label="輔助字型"
         display={display}
+        image={current?.image}
         lastResult={lastResult}
         lastCorrectKey={lastCorrectKey}
         correct={totalStats.current.correct}

@@ -1,6 +1,7 @@
 interface QuizCardProps {
   label: string;
   display: string;
+  image?: string;
   lastResult: "correct" | "wrong" | null;
   lastCorrectKey: string | null;
   correct: number;
@@ -10,6 +11,7 @@ interface QuizCardProps {
 export function QuizCard({
   label,
   display,
+  image,
   lastResult,
   lastCorrectKey,
   correct,
@@ -20,7 +22,9 @@ export function QuizCard({
   return (
     <div className="quiz-card">
       <div className="quiz-label">{label}</div>
-      <div className={`quiz-display ${lastResult}`}>{display}</div>
+      <div className={`quiz-display ${lastResult}`}>
+        {image ? <img src={image} alt={display} /> : display}
+      </div>
       {lastResult === "wrong" && lastCorrectKey && (
         <div className="quiz-answer">答案：{lastCorrectKey}</div>
       )}

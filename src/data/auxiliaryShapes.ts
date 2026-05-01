@@ -1,44 +1,24 @@
-export interface ShapeEntry {
-  shape: string;
-  letter: string;
-  key: string;
-}
-
-const raw: [string, string[]][] = [
-  ["A", ["日", "曰", "囗"]],
-  ["B", ["月", "冂", "冖", "爫", "夕", "⺼"]],
-  ["C", ["金", "八", "儿", "丷", "ハ", "釒"]],
-  ["D", ["木", "朩", "ホ", "⺌", "⺥"]],
-  ["E", ["水", "氵", "又", "氺"]],
-  ["F", ["火", "灬", "小", "⺍", "⺣"]],
-  ["G", ["土", "士"]],
-  ["H", ["竹", "⺮", "ノ", "丿", "厂", "⺤"]],
-  ["I", ["戈", "广", "弋", "厶", "丶"]],
-  ["J", ["十", "宀", "罒"]],
-  ["K", ["大", "义", "疒", "癶", "爻"]],
-  ["L", ["中", "丨", "衤", "屮", "虫", "由", "申"]],
-  ["M", ["一", "工", "丆", "厂"]],
-  ["N", ["弓", "乙", "亅", "ク", "卩", "乃", "乛", "乚"]],
-  ["O", ["人", "亻", "入", "牜", "𠂉", "⺅"]],
-  ["P", ["心", "忄", "七", "匕", "勹", "弋", "九"]],
-  ["Q", ["手", "扌", "丰", "ヰ", "牛", "爿"]],
-  ["R", ["口"]],
-  ["S", ["尸", "匚", "己", "已", "巳", "卩"]],
-  ["T", ["廿", "艹", "廾", "卌", "卄", "开", "曲"]],
-  ["U", ["山", "凵", "屰", "乚", "屮"]],
-  ["V", ["女", "く", "し", "丬", "卩"]],
-  ["W", ["田", "囗", "毋", "母"]],
-  ["Y", ["卜", "亠", "冫", "斗", "辶"]],
-];
-
 import { cangjieLetters } from "./letterMap";
 
-export const auxiliaryShapes: ShapeEntry[] = raw.flatMap(([key, shapes]) =>
-  shapes.map((shape) => ({
-    shape,
-    letter: cangjieLetters[key],
-    key,
-  }))
+export interface ShapeEntry {
+  key: string;
+  letter: string;
+  image: string;
+}
+
+const imageModules = import.meta.glob(
+  "/public/data/*/*.png",
+  { eager: true, as: "url" }
 );
+
+export const auxiliaryShapes: ShapeEntry[] = Object.entries(imageModules)
+  .map(([path, url]) => {
+    const parts = path.split("/");
+    const key = parts[parts.length - 2].toUpperCase();
+    const letter = cangjieLetters[key];
+    if (!letter) return null;
+    return { key, letter, image: url };
+  })
+  .filter((e): e is ShapeEntry => e !== null);
 
 export const AUXILIARY_SHAPES = auxiliaryShapes;

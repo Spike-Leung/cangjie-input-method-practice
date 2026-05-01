@@ -75,11 +75,19 @@ body {
 .quiz-display {
   font-size: 72px;
   font-weight: 700;
-  min-height: 100px;
+  min-height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s;
+}
+
+.quiz-display img {
+  min-height: 120px;
+  max-height: 200px;
+  max-width: 100%;
+  object-fit: contain;
+  image-rendering: auto;
 }
 
 .quiz-display.correct {
