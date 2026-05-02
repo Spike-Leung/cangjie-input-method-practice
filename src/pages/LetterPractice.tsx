@@ -64,6 +64,13 @@ export function LetterPractice() {
     forceRender((n) => n + 1);
   }, []);
 
+  const resetKeys = useCallback(() => {
+    const empty = new Set<string>();
+    saveDisabled(empty);
+    disabledKeys.current = empty;
+    forceRender((n) => n + 1);
+  }, []);
+
   const loadPool = useCallback((): WeightedLetter[] => {
     const exclude = prev.current;
     const stats = letterStats.current;
@@ -141,6 +148,7 @@ export function LetterPractice() {
         disabledKeys={disabledKeys.current}
         onToggleKey={toggleKey}
         onToggleEdit={() => setEditMode((v) => !v)}
+        onResetKeys={resetKeys}
       />
     </div>
   );

@@ -257,6 +257,28 @@ body {
   background: #bbdefb;
 }
 
+.keyboard-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.keyboard-reset-btn {
+  padding: 2px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: transparent;
+  color: #999;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.keyboard-reset-btn:hover {
+  border-color: #f44336;
+  color: #f44336;
+}
+
 .key-scope-off {
   opacity: 0.35;
 }

@@ -10,6 +10,7 @@ interface KeyboardProps {
   disabledKeys?: Set<string>;
   onToggleKey?: (key: string) => void;
   onToggleEdit?: () => void;
+  onResetKeys?: () => void;
 }
 
 const ROWS = [
@@ -27,6 +28,7 @@ export function Keyboard({
   disabledKeys,
   onToggleKey,
   onToggleEdit,
+  onResetKeys,
 }: KeyboardProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -53,11 +55,18 @@ export function Keyboard({
         >
           點選按鍵切換啟用／禁用
         </div>
-        {onToggleEdit && (
-          <button className="keyboard-edit-toggle" onClick={onToggleEdit}>
-            {editMode ? "完成" : "編輯範圍"}
-          </button>
-        )}
+        <div className="keyboard-edit-actions">
+          {editMode && onResetKeys && (
+            <button className="keyboard-reset-btn" onClick={onResetKeys}>
+              重置
+            </button>
+          )}
+          {onToggleEdit && (
+            <button className="keyboard-edit-toggle" onClick={onToggleEdit}>
+              {editMode ? "完成" : "編輯範圍"}
+            </button>
+          )}
+        </div>
       </div>
 
       {ROWS.map((row, ri) => (
