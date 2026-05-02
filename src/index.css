@@ -98,6 +98,13 @@ body {
   color: #c62828;
 }
 
+.quiz-hint {
+  font-size: 0.5em;
+  opacity: 0.4;
+  font-weight: 400;
+  margin-left: 0.12em;
+}
+
 .quiz-answer {
   font-size: 18px;
   color: #c62828;
@@ -120,20 +127,41 @@ body {
 }
 
 .keyboard {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 12px;
+  transition: background 0.2s;
+}
+
+.keyboard.edit-mode {
+  outline: 2px dashed #90caf9;
+  border-radius: 12px;
+  background: #f8fbff;
+}
+
+.keyboard-edit-hint {
+  font-size: 13px;
+  color: #1976d2;
+  margin-bottom: 4px;
+}
+
+.keyboard-edit-hint-hidden {
+  visibility: hidden;
 }
 
 .keyboard-row {
   display: flex;
   gap: 6px;
+}
 
-  /* 保持鍵盘布局 */
-  &:nth-child(3) {
-    margin-inline-start: -4em;
-  }
+.keyboard-row:nth-child(3) {
+  margin-left: 28px;
+}
+
+.keyboard-row:nth-child(4) {
+  margin-left: 56px;
 }
 
 .key {
@@ -202,4 +230,48 @@ body {
   background: #f44336;
   color: #fff;
   border-color: #f44336;
+}
+
+.edit-mode-btn {
+  margin-top: 16px;
+  padding: 8px 20px;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+  background: #e3f2fd;
+  color: #1976d2;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.edit-mode-btn:hover {
+  background: #bbdefb;
+}
+
+.hint-toggle {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 4px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: transparent;
+  color: #999;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.hint-toggle:hover {
+  border-color: #aaa;
+  color: #666;
+}
+
+.edit-mode-btn.active {
+  background: #1976d2;
+  color: #fff;
+  border-color: #1976d2;
+}
+
+.key-scope-off {
+  opacity: 0.35;
 }

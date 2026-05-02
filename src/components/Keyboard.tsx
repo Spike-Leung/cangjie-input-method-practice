@@ -6,6 +6,9 @@ interface KeyboardProps {
   highlightKey: string | null;
   highlightColor: "correct" | "wrong" | null;
   wrongKey: string | null;
+  editMode?: boolean;
+  disabledKeys?: Set<string>;
+  onToggleKey?: (key: string) => void;
 }
 
 const ROWS = [
@@ -14,16 +17,25 @@ const ROWS = [
   ["Z", "X", "C", "V", "B", "N", "M"],
 ];
 
-export function Keyboard({ onKeyPress, highlightKey, highlightColor, wrongKey }: KeyboardProps) {
+export function Keyboard({
+  onKeyPress,
+  highlightKey,
+  highlightColor,
+  wrongKey,
+  editMode,
+  disabledKeys,
+  onToggleKey,
+}: KeyboardProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      if (editMode) return;
       const key = e.key.toUpperCase();
       if (cangjieLetters[key]) {
         e.preventDefault();
         onKeyPress(key);
       }
     },
-    [onKeyPress]
+    [onKeyPress, editMode]
   );
 
   useEffect(() => {
@@ -32,20 +44,40 @@ export function Keyboard({ onKeyPress, highlightKey, highlightColor, wrongKey }:
   }, [handleKeyDown]);
 
   return (
-    <div className="keyboard">
+    <div className={`keyboard ${editMode ? "edit-mode" : ""}`}>
+      <div className={`keyboard-edit-hint ${editMode ? "" : "keyboard-edit-hint-hidden"}`}>
+        點選按鍵切換啟用／禁用
+      </div>
       {ROWS.map((row, ri) => (
         <div key={ri} className="keyboard-row">
           {row.map((key) => {
+            const hasMapping = !!cangjieLetters[key];
+            const isFiltered = disabledKeys?.has(key);
             const isWrong = key === wrongKey;
             const isCorrect = !isWrong && key === highlightKey && highlightColor;
             const colorClass = isWrong ? "key-wrong" : isCorrect ? `key-${highlightColor}` : "";
-            const hasMapping = !!cangjieLetters[key];
+            const scopeClass = isFiltered ? "key-scope-off" : "";
+
+            if (editMode) {
+              return (
+                <button
+                  key={key}
+                  className={`key ${scopeClass} ${hasMapping ? "" : "key-disabled"}`}
+                  onClick={() => hasMapping && onToggleKey?.(key)}
+                  disabled={!hasMapping}
+                >
+                  <span className="key-cangjie">{cangjieLetters[key] || ""}</span>
+                  <span className="key-en">{key}</span>
+                </button>
+              );
+            }
+
             return (
               <button
                 key={key}
-                className={`key ${colorClass} ${hasMapping ? "" : "key-disabled"}`}
-                onClick={() => hasMapping && onKeyPress(key)}
-                disabled={!hasMapping}
+                className={`key ${colorClass} ${scopeClass} ${hasMapping && !isFiltered ? "" : "key-disabled"}`}
+                onClick={() => hasMapping && !isFiltered && onKeyPress(key)}
+                disabled={!hasMapping || !!isFiltered}
               >
                 <span className="key-cangjie">{cangjieLetters[key] || ""}</span>
                 <span className="key-en">{key}</span>

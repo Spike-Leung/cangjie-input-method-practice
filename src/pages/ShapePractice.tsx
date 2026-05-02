@@ -99,7 +99,6 @@ export function ShapePractice() {
         display={display}
         image={current?.image}
         lastResult={lastResult}
-        lastCorrectKey={lastCorrectKey}
       />
       <Keyboard
         onKeyPress={handleKeyPress}

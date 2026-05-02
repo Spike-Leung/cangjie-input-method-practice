@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard } from "../components/Keyboard";
 import { QuizCard } from "../components/QuizCard";
 import { useQuiz } from "../hooks/useQuiz";
 import { LETTERS, cangjieLetters, getKey } from "../data/letterMap";
 import { weightedPick } from "../utils/weightedRandom";
 
-const STORAGE_KEY = "cangjie-letter-stats";
+const STATS_KEY = "cangjie-letter-stats";
+const FILTER_KEY = "cangjie-letter-disabled";
 
 interface LetterStats {
   correct: number;
@@ -19,7 +20,7 @@ interface WeightedLetter {
 
 function loadStats(): Record<string, LetterStats> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STATS_KEY);
     return raw ? JSON.parse(raw) : {};
   } catch {
     return {};
@@ -27,7 +28,20 @@ function loadStats(): Record<string, LetterStats> {
 }
 
 function saveStats(stats: Record<string, LetterStats>) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+}
+
+function loadDisabled(): Set<string> {
+  try {
+    const raw = localStorage.getItem(FILTER_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveDisabled(keys: Set<string>) {
+  localStorage.setItem(FILTER_KEY, JSON.stringify([...keys]));
 }
 
 export function LetterPractice() {
@@ -35,21 +49,40 @@ export function LetterPractice() {
 
   const letterStats = useRef<Record<string, LetterStats>>(loadStats());
   const prev = useRef<string | null>(null);
+  const disabledKeys = useRef<Set<string>>(loadDisabled());
+
+  const [editMode, setEditMode] = useState(false);
+  const [showHint, setShowHint] = useState(true);
+  const [, forceRender] = useState(0);
+
+  const toggleKey = useCallback((key: string) => {
+    const next = new Set(disabledKeys.current);
+    if (next.has(key)) next.delete(key);
+    else next.add(key);
+    saveDisabled(next);
+    disabledKeys.current = next;
+    forceRender((n) => n + 1);
+  }, []);
 
   const loadPool = useCallback((): WeightedLetter[] => {
     const exclude = prev.current;
     const stats = letterStats.current;
-    return LETTERS
-      .filter((l) => l !== exclude)
-      .map((l) => {
-        const st = stats[l] ?? { correct: 0, total: 0 };
-        const errorRate = st.total > 0 ? (st.total - st.correct) / st.total : 0;
-        return { letter: l, weight: 1 + errorRate * 6 };
-      });
+    const dk = disabledKeys.current;
+    let candidates = LETTERS.filter((l) => !dk.has(l));
+    if (candidates.length > 1 && exclude) {
+      const withoutPrev = candidates.filter((l) => l !== exclude);
+      if (withoutPrev.length > 0) candidates = withoutPrev;
+    }
+    return candidates.map((l) => {
+      const st = stats[l] ?? { correct: 0, total: 0 };
+      const errorRate = st.total > 0 ? (st.total - st.correct) / st.total : 0;
+      return { letter: l, weight: 1 + errorRate * 6 };
+    });
   }, []);
 
   const pickNext = useCallback(() => {
     const pool = loadPool();
+    if (pool.length === 0) return;
     next(() => {
       const picked = weightedPick(pool);
       prev.current = picked.letter;
@@ -96,15 +129,30 @@ export function LetterPractice() {
       <QuizCard
         label="請輸入對應鍵位"
         display={display}
+        hint={showHint && current ? current : undefined}
         lastResult={lastResult}
-        lastCorrectKey={lastCorrectKey}
       />
+      <button
+        className="hint-toggle"
+        onClick={() => setShowHint((v) => !v)}
+      >
+        {showHint ? "隱藏提示" : "顯示提示"}
+      </button>
       <Keyboard
         onKeyPress={handleKeyPress}
         highlightKey={lastResult === "correct" ? lastCorrectKey : null}
         highlightColor={lastResult === "correct" ? "correct" : null}
         wrongKey={lastResult === "wrong" ? lastWrongKey : null}
+        editMode={editMode}
+        disabledKeys={disabledKeys.current}
+        onToggleKey={toggleKey}
       />
+      <button
+        className={`edit-mode-btn ${editMode ? "active" : ""}`}
+        onClick={() => setEditMode((v) => !v)}
+      >
+        {editMode ? "完成" : "編輯範圍"}
+      </button>
     </div>
   );
 }
