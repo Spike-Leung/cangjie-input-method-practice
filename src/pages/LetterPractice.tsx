@@ -125,19 +125,14 @@ export function LetterPractice() {
   return (
     <div className="practice-page">
       <h1>倉頡字母鍵位練習</h1>
-      <p className="page-desc">看到倉頡字母，按下對應的英文鍵位</p>
       <QuizCard
         label="請輸入對應鍵位"
         display={display}
-        hint={showHint && current ? current : undefined}
+        hint={current ?? undefined}
+        showHint={showHint}
+        onToggleHint={() => setShowHint((v) => !v)}
         lastResult={lastResult}
       />
-      <button
-        className="hint-toggle"
-        onClick={() => setShowHint((v) => !v)}
-      >
-        {showHint ? "隱藏提示" : "顯示提示"}
-      </button>
       <Keyboard
         onKeyPress={handleKeyPress}
         highlightKey={lastResult === "correct" ? lastCorrectKey : null}
@@ -146,13 +141,8 @@ export function LetterPractice() {
         editMode={editMode}
         disabledKeys={disabledKeys.current}
         onToggleKey={toggleKey}
+        onToggleEdit={() => setEditMode((v) => !v)}
       />
-      <button
-        className={`edit-mode-btn ${editMode ? "active" : ""}`}
-        onClick={() => setEditMode((v) => !v)}
-      >
-        {editMode ? "完成" : "編輯範圍"}
-      </button>
     </div>
   );
 }

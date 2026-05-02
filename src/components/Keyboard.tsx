@@ -9,6 +9,7 @@ interface KeyboardProps {
   editMode?: boolean;
   disabledKeys?: Set<string>;
   onToggleKey?: (key: string) => void;
+  onToggleEdit?: () => void;
 }
 
 const ROWS = [
@@ -25,6 +26,7 @@ export function Keyboard({
   editMode,
   disabledKeys,
   onToggleKey,
+  onToggleEdit,
 }: KeyboardProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -86,6 +88,11 @@ export function Keyboard({
           })}
         </div>
       ))}
+      {onToggleEdit && (
+        <button className="keyboard-edit-toggle" onClick={onToggleEdit}>
+          {editMode ? "完成" : "編輯範圍"}
+        </button>
+      )}
     </div>
   );
 }

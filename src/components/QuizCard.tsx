@@ -3,6 +3,8 @@ interface QuizCardProps {
   display: string;
   image?: string;
   hint?: string;
+  showHint?: boolean;
+  onToggleHint?: () => void;
   lastResult: "correct" | "wrong" | null;
 }
 
@@ -11,6 +13,8 @@ export function QuizCard({
   display,
   image,
   hint,
+  showHint,
+  onToggleHint,
   lastResult,
 }: QuizCardProps) {
   return (
@@ -22,10 +26,20 @@ export function QuizCard({
         ) : (
           <>
             {display}
-            {hint && <span className="quiz-hint">{hint}</span>}
+            {hint && showHint && <span className="quiz-hint">{hint}</span>}
           </>
         )}
       </div>
+      {onToggleHint && (
+        <label className="quiz-hint-toggle">
+          <input
+            type="checkbox"
+            checked={showHint ?? false}
+            onChange={onToggleHint}
+          />
+          提示
+        </label>
+      )}
     </div>
   );
 }

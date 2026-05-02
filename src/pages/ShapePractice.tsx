@@ -93,7 +93,6 @@ export function ShapePractice() {
   return (
     <div className="practice-page">
       <h1>倉頡輔助字型練習</h1>
-      <p className="page-desc">看到輔助字型，輸入對應的倉頡字母鍵位</p>
       <QuizCard
         label="輔助字型"
         display={display}
