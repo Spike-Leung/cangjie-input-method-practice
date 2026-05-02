@@ -5,6 +5,7 @@ interface KeyboardProps {
   onKeyPress: (key: string) => void;
   highlightKey: string | null;
   highlightColor: "correct" | "wrong" | null;
+  wrongKey: string | null;
 }
 
 const ROWS = [
@@ -13,7 +14,7 @@ const ROWS = [
   ["Z", "X", "C", "V", "B", "N", "M"],
 ];
 
-export function Keyboard({ onKeyPress, highlightKey, highlightColor }: KeyboardProps) {
+export function Keyboard({ onKeyPress, highlightKey, highlightColor, wrongKey }: KeyboardProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       const key = e.key.toUpperCase();
@@ -35,8 +36,9 @@ export function Keyboard({ onKeyPress, highlightKey, highlightColor }: KeyboardP
       {ROWS.map((row, ri) => (
         <div key={ri} className="keyboard-row">
           {row.map((key) => {
-            const isHighlighted = key === highlightKey;
-            const colorClass = isHighlighted ? `key-${highlightColor}` : "";
+            const isWrong = key === wrongKey;
+            const isCorrect = !isWrong && key === highlightKey && highlightColor;
+            const colorClass = isWrong ? "key-wrong" : isCorrect ? `key-${highlightColor}` : "";
             const hasMapping = !!cangjieLetters[key];
             return (
               <button

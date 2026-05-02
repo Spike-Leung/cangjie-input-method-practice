@@ -129,6 +129,11 @@ body {
 .keyboard-row {
   display: flex;
   gap: 6px;
+
+  /* 保持鍵盘布局 */
+  &:nth-child(3) {
+    margin-inline-start: -4em;
+  }
 }
 
 .key {

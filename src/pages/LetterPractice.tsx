@@ -1,26 +1,84 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Keyboard } from "../components/Keyboard";
 import { QuizCard } from "../components/QuizCard";
 import { useQuiz } from "../hooks/useQuiz";
 import { LETTERS, cangjieLetters, getKey } from "../data/letterMap";
+import { weightedPick } from "../utils/weightedRandom";
 
-function pickRandomLetter(): string {
-  return LETTERS[Math.floor(Math.random() * LETTERS.length)];
+const STORAGE_KEY = "cangjie-letter-stats";
+
+interface LetterStats {
+  correct: number;
+  total: number;
+}
+
+interface WeightedLetter {
+  letter: string;
+  weight: number;
+}
+
+function loadStats(): Record<string, LetterStats> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveStats(stats: Record<string, LetterStats>) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
 }
 
 export function LetterPractice() {
-  const { current, stats, lastResult, lastCorrectKey, next, answer } = useQuiz(LETTERS);
+  const { current, lastResult, lastCorrectKey, lastWrongKey, next, answer } = useQuiz(LETTERS);
+
+  const letterStats = useRef<Record<string, LetterStats>>(loadStats());
+  const prev = useRef<string | null>(null);
+
+  const loadPool = useCallback((): WeightedLetter[] => {
+    const exclude = prev.current;
+    const stats = letterStats.current;
+    return LETTERS
+      .filter((l) => l !== exclude)
+      .map((l) => {
+        const st = stats[l] ?? { correct: 0, total: 0 };
+        const errorRate = st.total > 0 ? (st.total - st.correct) / st.total : 0;
+        return { letter: l, weight: 1 + errorRate * 6 };
+      });
+  }, []);
 
   const pickNext = useCallback(() => {
-    next(pickRandomLetter);
-  }, [next]);
+    const pool = loadPool();
+    next(() => {
+      const picked = weightedPick(pool);
+      prev.current = picked.letter;
+      return picked.letter;
+    });
+  }, [next, loadPool]);
 
   const handleKeyPress = useCallback(
     (key: string) => {
-      if (!current || lastResult) return;
+      if (!current) return;
+      if (lastResult === "correct") return;
       const correctKey = getKey(cangjieLetters[current]);
-      answer(key, correctKey);
-      setTimeout(pickNext, 600);
+      const isCorrect = key === correctKey;
+
+      const ls = letterStats.current;
+      if (!ls[correctKey]) ls[correctKey] = { correct: 0, total: 0 };
+      ls[correctKey].total += 1;
+      if (isCorrect) ls[correctKey].correct += 1;
+      saveStats(ls);
+
+      if (isCorrect) {
+        answer(key, correctKey);
+        setTimeout(pickNext, 100);
+      } else if (lastResult === "wrong") {
+        answer(key, correctKey);
+        setTimeout(pickNext, 100);
+      } else {
+        answer(key, correctKey);
+      }
     },
     [current, lastResult, answer, pickNext]
   );
@@ -40,13 +98,12 @@ export function LetterPractice() {
         display={display}
         lastResult={lastResult}
         lastCorrectKey={lastCorrectKey}
-        correct={stats.correct}
-        total={stats.total}
       />
       <Keyboard
         onKeyPress={handleKeyPress}
-        highlightKey={lastCorrectKey}
-        highlightColor={lastResult}
+        highlightKey={lastResult === "correct" ? lastCorrectKey : null}
+        highlightColor={lastResult === "correct" ? "correct" : null}
+        wrongKey={lastResult === "wrong" ? lastWrongKey : null}
       />
     </div>
   );

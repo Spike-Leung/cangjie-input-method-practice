@@ -37,7 +37,7 @@ function buildWeightedItems(
 }
 
 export function ShapePractice() {
-  const { current, lastResult, lastCorrectKey, next, answer } =
+  const { current, lastResult, lastCorrectKey, lastWrongKey, next, answer } =
     useQuiz(AUXILIARY_SHAPES);
 
   const letterStats = useRef<Record<string, LetterStats>>(loadStats());
@@ -51,7 +51,8 @@ export function ShapePractice() {
 
   const handleKeyPress = useCallback(
     (key: string) => {
-      if (!current || lastResult) return;
+      if (!current) return;
+      if (lastResult === "correct") return;
       const correctKey = current.key;
       const isCorrect = key === correctKey;
 
@@ -63,8 +64,15 @@ export function ShapePractice() {
       if (isCorrect) totalStats.current.correct += 1;
       saveStats(ls);
 
-      answer(key, correctKey);
-      setTimeout(pickNext, 600);
+      if (isCorrect) {
+        answer(key, correctKey);
+        setTimeout(pickNext, 100);
+      } else if (lastResult === "wrong") {
+        answer(key, correctKey);
+        setTimeout(pickNext, 100);
+      } else {
+        answer(key, correctKey);
+      }
     },
     [current, lastResult, answer, pickNext]
   );
@@ -92,13 +100,12 @@ export function ShapePractice() {
         image={current?.image}
         lastResult={lastResult}
         lastCorrectKey={lastCorrectKey}
-        correct={totalStats.current.correct}
-        total={totalStats.current.total}
       />
       <Keyboard
         onKeyPress={handleKeyPress}
-        highlightKey={lastCorrectKey}
-        highlightColor={lastResult}
+        highlightKey={lastResult === "correct" ? lastCorrectKey : null}
+        highlightColor={lastResult === "correct" ? "correct" : null}
+        wrongKey={lastResult === "wrong" ? lastWrongKey : null}
       />
       <button className="reset-btn" onClick={handleReset}>
         重置統計數據

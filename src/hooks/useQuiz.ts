@@ -10,6 +10,7 @@ export function useQuiz<T>(_items: T[]) {
   const [stats, setStats] = useState<QuizStats>({ correct: 0, total: 0 });
   const [lastResult, setLastResult] = useState<"correct" | "wrong" | null>(null);
   const [lastCorrectKey, setLastCorrectKey] = useState<string | null>(null);
+  const [lastWrongKey, setLastWrongKey] = useState<string | null>(null);
 
   const next = useCallback(
     (pickFn: () => T) => {
@@ -17,6 +18,7 @@ export function useQuiz<T>(_items: T[]) {
       setCurrent(item);
       setLastResult(null);
       setLastCorrectKey(null);
+      setLastWrongKey(null);
     },
     []
   );
@@ -33,10 +35,11 @@ export function useQuiz<T>(_items: T[]) {
       }));
       setLastResult(isCorrect ? "correct" : "wrong");
       setLastCorrectKey(correctKey);
+      setLastWrongKey(isCorrect ? null : key);
       return { result: isCorrect ? "correct" : "wrong" };
     },
     []
   );
 
-  return { current, stats, lastResult, lastCorrectKey, next, answer, setCurrent };
+  return { current, stats, lastResult, lastCorrectKey, lastWrongKey, next, answer, setCurrent };
 }
