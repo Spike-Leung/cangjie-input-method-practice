@@ -29,6 +29,19 @@ export const cangjieLetters: Record<string, string> = {
 
 export const LETTERS = Object.keys(cangjieLetters);
 
+export type CangjieCategory = "philosophy" | "stroke" | "body" | "shape" | "special";
+
+export const LETTER_CATEGORY: Record<string, CangjieCategory> = {
+  A: "philosophy", B: "philosophy", C: "philosophy", D: "philosophy",
+  E: "philosophy", F: "philosophy", G: "philosophy",
+  H: "stroke", I: "stroke", J: "stroke", K: "stroke",
+  L: "stroke", M: "stroke", N: "stroke",
+  O: "body", P: "body", Q: "body", R: "body",
+  S: "shape", T: "shape", U: "shape", V: "shape",
+  W: "shape", Y: "shape",
+  X: "special", Z: "special",
+};
+
 export function getLetter(key: string): string {
   return cangjieLetters[key] ?? "";
 }

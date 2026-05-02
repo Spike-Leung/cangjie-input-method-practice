@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { cangjieLetters } from "../data/letterMap";
+import { cangjieLetters, LETTER_CATEGORY } from "../data/letterMap";
 
 interface KeyboardProps {
   onKeyPress: (key: string) => void;
@@ -74,12 +74,13 @@ export function Keyboard({
                 ? `key-${highlightColor}`
                 : "";
             const scopeClass = isFiltered ? "key-scope-off" : "";
+            const catClass = `key-cat-${LETTER_CATEGORY[key] || ""}`;
 
             if (editMode) {
               return (
                 <button
                   key={key}
-                  className={`key ${scopeClass} ${hasMapping ? "" : "key-disabled"}`}
+                  className={`key ${catClass} ${scopeClass} ${hasMapping ? "" : "key-disabled"}`}
                   onClick={() => hasMapping && onToggleKey?.(key)}
                   disabled={!hasMapping}
                 >
@@ -94,7 +95,7 @@ export function Keyboard({
             return (
               <button
                 key={key}
-                className={`key ${colorClass} ${scopeClass} ${hasMapping && !isFiltered ? "" : "key-disabled"}`}
+                className={`key ${catClass} ${colorClass} ${scopeClass} ${hasMapping && !isFiltered ? "" : "key-disabled"}`}
                 onClick={() => hasMapping && !isFiltered && onKeyPress(key)}
                 disabled={!hasMapping || !!isFiltered}
               >

@@ -162,6 +162,26 @@ body {
   user-select: none;
 }
 
+.key-cat-philosophy {
+  background: #e3f2fd;
+}
+
+.key-cat-stroke {
+  background: #e8f5e9;
+}
+
+.key-cat-body {
+  background: #fff3e0;
+}
+
+.key-cat-shape {
+  background: #f3e5f5;
+}
+
+.key-cat-special {
+  background: #eceff1;
+}
+
 .key:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
