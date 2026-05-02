@@ -8,10 +8,22 @@ npm run preview   # Preview production build
 ```
 No test, lint, or format scripts are configured.
 
+## Commit conventions
+
+**Atomic commits.** Each commit should be a single logical change. Do not bundle unrelated modifications together. Before committing, split work into independent commits:
+- Each UI component change = separate commit
+- Each behavior/logic change = separate commit
+- CSS style changes tied to a specific component change go in the same commit; standalone CSS refactors get their own commit
+
+Example: Moving a button into a component and removing a prompt line are two separate commits.
+
 ## Architecture
 
 Single-page React app (React 18 + TypeScript 5.6 + Vite 6 + React Router v6).
 All CSS is in `src/index.css` (plain CSS, no framework).
+
+**CSS conventions:**
+- Use logical properties (e.g., `margin-block`, `margin-inline`, `padding-block`, `padding-inline`) instead of physical properties (`margin-top`/`margin-bottom`, `margin-left`/`margin-right`, etc.)
 
 **Routes:**
 - `/letter-practice` → letter keyboard drill (random, no weighting)
