@@ -1,5 +1,4 @@
 interface QuizCardProps {
-  label: string;
   display: string;
   image?: string;
   hint?: string;
@@ -9,7 +8,6 @@ interface QuizCardProps {
 }
 
 export function QuizCard({
-  label,
   display,
   image,
   hint,
@@ -19,7 +17,6 @@ export function QuizCard({
 }: QuizCardProps) {
   return (
     <div className="quiz-card">
-      <div className="quiz-label">{label}</div>
       <div className={`quiz-display ${lastResult}`}>
         {image ? (
           <img src={image} alt={display} />
@@ -37,7 +34,7 @@ export function QuizCard({
             checked={showHint ?? false}
             onChange={onToggleHint}
           />
-          提示
+          顯示字母
         </label>
       )}
     </div>

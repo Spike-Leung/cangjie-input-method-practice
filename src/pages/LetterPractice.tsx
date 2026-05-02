@@ -126,7 +126,6 @@ export function LetterPractice() {
     <div className="practice-page">
       <h1>倉頡字母鍵位練習</h1>
       <QuizCard
-        label="請輸入對應鍵位"
         display={display}
         hint={current ?? undefined}
         showHint={showHint}

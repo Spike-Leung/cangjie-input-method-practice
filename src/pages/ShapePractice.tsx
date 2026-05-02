@@ -94,7 +94,6 @@ export function ShapePractice() {
     <div className="practice-page">
       <h1>倉頡輔助字型練習</h1>
       <QuizCard
-        label="輔助字型"
         display={display}
         image={current?.image}
         lastResult={lastResult}

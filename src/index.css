@@ -61,12 +61,6 @@ body {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-.quiz-label {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 8px;
-}
-
 .quiz-display {
   font-size: 72px;
   font-weight: 700;
