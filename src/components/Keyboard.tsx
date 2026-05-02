@@ -37,7 +37,7 @@ export function Keyboard({
         onKeyPress(key);
       }
     },
-    [onKeyPress, editMode]
+    [onKeyPress, editMode],
   );
 
   useEffect(() => {
@@ -47,17 +47,32 @@ export function Keyboard({
 
   return (
     <div className={`keyboard ${editMode ? "edit-mode" : ""}`}>
-      <div className={`keyboard-edit-hint ${editMode ? "" : "keyboard-edit-hint-hidden"}`}>
-        點選按鍵切換啟用／禁用
+      <div className="keyboard-edit-container">
+        <div
+          className={`keyboard-edit-hint ${editMode ? "" : "keyboard-edit-hint-hidden"}`}
+        >
+          點選按鍵切換啟用／禁用
+        </div>
+        {onToggleEdit && (
+          <button className="keyboard-edit-toggle" onClick={onToggleEdit}>
+            {editMode ? "完成" : "編輯範圍"}
+          </button>
+        )}
       </div>
+
       {ROWS.map((row, ri) => (
         <div key={ri} className="keyboard-row">
           {row.map((key) => {
             const hasMapping = !!cangjieLetters[key];
             const isFiltered = disabledKeys?.has(key);
             const isWrong = key === wrongKey;
-            const isCorrect = !isWrong && key === highlightKey && highlightColor;
-            const colorClass = isWrong ? "key-wrong" : isCorrect ? `key-${highlightColor}` : "";
+            const isCorrect =
+              !isWrong && key === highlightKey && highlightColor;
+            const colorClass = isWrong
+              ? "key-wrong"
+              : isCorrect
+                ? `key-${highlightColor}`
+                : "";
             const scopeClass = isFiltered ? "key-scope-off" : "";
 
             if (editMode) {
@@ -68,7 +83,9 @@ export function Keyboard({
                   onClick={() => hasMapping && onToggleKey?.(key)}
                   disabled={!hasMapping}
                 >
-                  <span className="key-cangjie">{cangjieLetters[key] || ""}</span>
+                  <span className="key-cangjie">
+                    {cangjieLetters[key] || ""}
+                  </span>
                   <span className="key-en">{key}</span>
                 </button>
               );
@@ -88,11 +105,6 @@ export function Keyboard({
           })}
         </div>
       ))}
-      {onToggleEdit && (
-        <button className="keyboard-edit-toggle" onClick={onToggleEdit}>
-          {editMode ? "完成" : "編輯範圍"}
-        </button>
-      )}
     </div>
   );
 }
