@@ -168,6 +168,18 @@ print(f"Parsed {len(entries)} Cangjie entries")
 DEFAULT_FREQ = 500
 entries.sort(key=lambda x: -freq.get(x[0], DEFAULT_FREQ))
 
+# --- Apply manual fixes for known incorrect codes ---
+FIXES = {
+    "聚": "seoho",
+}
+
+for char, correct_code in FIXES.items():
+    for i, (c, code) in enumerate(entries):
+        if c == char:
+            if code != correct_code:
+                print(f"  Fixing {char}: {code} → {correct_code}")
+            entries[i] = (char, correct_code)
+
 # --- Deduplicate: keep first occurrence for each character ---
 seen = set()
 entries = [e for e in entries if e[0] not in seen and not seen.add(e[0])]

@@ -294,7 +294,6 @@ export function CodePractice() {
           lastResult={null}
           copyText={current?.char ?? ""}
           zdicUrl={current ? `https://www.zdic.net/hans/${current.char}` : undefined}
-          chidicUrl={current ? `https://chidic.eduhk.hk/v.php?dicword=${encodeURIComponent(current.char)}` : undefined}
           leftActions={modeActions}
         />
       )}
@@ -325,6 +324,26 @@ export function CodePractice() {
                 </div>
               );
             })}
+          </div>
+
+          <div className="code-notice">
+            如果對編碼存疑，請點擊
+            <a
+              href={current ? `https://chidic.eduhk.hk/v.php?dicword=${encodeURIComponent(current.char)}` : "https://chidic.eduhk.hk/"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              漢文庫典
+            </a>
+            查詢，以漢文庫典為準。<br />如果確認有誤，請
+            <a
+              href="https://github.com/Spike-Leung/cangjie-input-method-practice/issues/new"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              提交 issue
+            </a>
+            ，謝謝 :)
           </div>
 
           <Keyboard

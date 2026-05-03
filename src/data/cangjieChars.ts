@@ -1685,7 +1685,7 @@ export const CODE_CHARS: CodeEntry[] = [
   { char: '患', code: 'llp' },
   { char: '税', code: 'hdcru' },
   { char: '拒', code: 'qss' },
-  { char: '聚', code: 'sehho' },
+  { char: '聚', code: 'seoho' },
   { char: '登', code: 'nomrt' },
   { char: '祖', code: 'ifbm' },
   { char: '诚', code: 'ivihs' },

@@ -1,0 +1,31 @@
+name: 編碼錯誤回報
+description: 回報倉頡拆碼練習中的錯誤編碼
+title: "[編碼錯誤] "
+labels: ["bug"]
+body:
+  - type: input
+    id: character
+    attributes:
+      label: 錯誤的字
+      description: 哪個字的編碼有問題？
+    validations:
+      required: true
+  - type: input
+    id: wrong_code
+    attributes:
+      label: 錯誤的編碼
+      description: 目前顯示的編碼是什麼？
+    validations:
+      required: true
+  - type: input
+    id: correct_code
+    attributes:
+      label: 正確的編碼
+      description: 正確的倉頡碼應該是？
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補充說明
+      description: 其他資訊（如參考來源、漢文庫典截圖等）
