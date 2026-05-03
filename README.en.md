@@ -2,6 +2,8 @@
 
 A web app for learning and practicing the [Cangjie input method](https://en.wikipedia.org/wiki/Cangjie_input_method) — the legendary open-source shape-based Chinese input system. Drill letter positions, memorize auxiliary shapes, and practice decomposing characters.
 
+> Built through vibe coding as an exercise in agent-driven development, this tool helps learners practice the Cangjie input method.
+
 ---
 
 ## Why Cangjie?
