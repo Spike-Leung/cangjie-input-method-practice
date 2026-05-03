@@ -99,14 +99,9 @@ export function ShapePractice() {
       if (isCorrect) ls[correctKey].correct += 1;
       saveStats(ls);
 
+      answer(key, correctKey);
       if (isCorrect) {
-        answer(key, correctKey);
         setTimeout(pickNext, 100);
-      } else if (lastResult === "wrong") {
-        answer(key, correctKey);
-        setTimeout(pickNext, 100);
-      } else {
-        answer(key, correctKey);
       }
     },
     [current, lastResult, answer, pickNext]
