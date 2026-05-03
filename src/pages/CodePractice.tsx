@@ -3,6 +3,7 @@ import { Keyboard } from "../components/Keyboard";
 import { QuizCard } from "../components/QuizCard";
 import { CODE_CHARS, CodeEntry } from "../data/cangjieChars";
 import { cangjieLetters } from "../data/letterMap";
+import { useHintState } from "../hooks/useHintState";
 import { weightedPick } from "../utils/weightedRandom";
 
 const STATS_KEY = "cangjie-code-stats";
@@ -51,7 +52,7 @@ export function CodePractice() {
   const [current, setCurrent] = useState<CodeEntry | null>(null);
   const [inputs, setInputs] = useState<string[]>([]);
   const [results, setResults] = useState<("correct" | "wrong")[]>([]);
-  const [showHint, setShowHint] = useState(true);
+  const { showHint, toggleHint } = useHintState();
   const [missedMode, setMissedMode] = useState(() => {
     try {
       return localStorage.getItem("cangjie-code-missed-mode") === "true";
@@ -122,7 +123,7 @@ export function CodePractice() {
         }
       }
 
-      if (newResults.every((r) => r === "correct")) {
+      if (newResults.length === codeLen && newResults.every((r) => r === "correct")) {
         const ls = stats.current;
         if (!ls[code]) ls[code] = { correct: 0, total: 0 };
         ls[code].total += 1;
@@ -176,7 +177,7 @@ export function CodePractice() {
       }
       if (e.code === "Space") {
         e.preventDefault();
-        setShowHint((v) => !v);
+        toggleHint();
       }
     };
     window.addEventListener("keydown", handler);
@@ -288,7 +289,7 @@ export function CodePractice() {
           display={display}
           hint={hintRadicals}
           showHint={showHint}
-          onToggleHint={() => setShowHint((v) => !v)}
+          onToggleHint={toggleHint}
           lastResult={null}
           copyText={current?.char ?? ""}
           zdicUrl={current ? `https://www.zdic.net/hans/${current.char}` : undefined}

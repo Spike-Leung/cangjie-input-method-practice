@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard } from "../components/Keyboard";
 import { QuizCard } from "../components/QuizCard";
 import { useQuiz } from "../hooks/useQuiz";
+import { useHintState } from "../hooks/useHintState";
 import { LETTERS, cangjieLetters, getKey } from "../data/letterMap";
 import { weightedPick } from "../utils/weightedRandom";
 
@@ -52,7 +53,7 @@ export function LetterPractice() {
   const disabledKeys = useRef<Set<string>>(loadDisabled());
 
   const [editMode, setEditMode] = useState(false);
-  const [showHint, setShowHint] = useState(true);
+  const { showHint, toggleHint } = useHintState();
   const [, forceRender] = useState(0);
 
   const toggleKey = useCallback((key: string) => {
@@ -133,7 +134,7 @@ export function LetterPractice() {
       if (editMode) return;
       if (e.code === "Space") {
         e.preventDefault();
-        setShowHint((v) => !v);
+        toggleHint();
       }
     };
     window.addEventListener("keydown", handler);
@@ -149,7 +150,7 @@ export function LetterPractice() {
         display={display}
         hint={current ?? undefined}
         showHint={showHint}
-        onToggleHint={() => setShowHint((v) => !v)}
+        onToggleHint={toggleHint}
         lastResult={lastResult}
       />
       <Keyboard
