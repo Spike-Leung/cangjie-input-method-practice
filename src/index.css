@@ -513,3 +513,170 @@ body {
 .key-scope-off {
   opacity: 0.35;
 }
+
+@media (max-width: 720px) {
+  .nav a {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .practice-page {
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+
+  .practice-page h1 {
+    font-size: 20px;
+  }
+
+  .quiz-card {
+    padding: 20px 16px;
+    margin-block: 16px;
+  }
+
+  .quiz-display {
+    font-size: 80px;
+    min-height: 120px;
+  }
+
+  .quiz-display img {
+    min-height: 80px;
+    max-height: 150px;
+  }
+
+  .quiz-answer {
+    font-size: 20px;
+    min-height: 28px;
+  }
+
+  .quiz-card-actions {
+    top: 8px;
+    right: 8px;
+    gap: 6px;
+  }
+
+  .quiz-card-left-actions {
+    top: 8px;
+    left: 8px;
+    gap: 4px;
+  }
+
+  .quiz-zdic-link {
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .missed-editor {
+    padding: 16px;
+  }
+
+  .missed-editor-title {
+    font-size: 14px;
+  }
+
+  .missed-editor-bar {
+    margin-bottom: 12px;
+  }
+
+  .missed-char {
+    font-size: 18px;
+    width: 40px;
+  }
+
+  .missed-code {
+    font-size: 14px;
+  }
+
+  .missed-empty {
+    font-size: 16px;
+    padding-block: 24px;
+  }
+
+  .code-slots {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .code-slot {
+    width: 42px;
+    height: 48px;
+    border-radius: 6px;
+  }
+
+  .code-slot-placeholder {
+    font-size: 10px;
+    top: 1px;
+  }
+
+  .code-slot-input {
+    font-size: 18px;
+  }
+
+  .code-slot.current {
+    box-shadow: 0 0 0 1.5px rgba(144, 202, 249, 0.4);
+  }
+
+  .keyboard {
+    gap: 5px;
+    padding: 10px 4px;
+  }
+
+  .keyboard-row {
+    gap: 4px;
+  }
+
+  .keyboard-row:nth-child(3) {
+    margin-left: 17px;
+  }
+
+  .keyboard-row:nth-child(4) {
+    margin-left: 34px;
+  }
+
+  .key {
+    width: 31px;
+    height: 44px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .key:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .key-cangjie {
+    font-size: 12px;
+  }
+
+  .key-en {
+    font-size: 9px;
+  }
+
+  .key-hint {
+    outline-width: 2px;
+  }
+
+  .key-hint-nums {
+    top: 0;
+    right: 1px;
+  }
+
+  .key-hint-num {
+    font-size: 9px;
+  }
+
+  .keyboard-edit-hint {
+    font-size: 12px;
+  }
+
+  .keyboard-edit-toggle {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .keyboard-reset-btn {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+}
