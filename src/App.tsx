@@ -1,9 +1,38 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
 import { LetterPractice } from "./pages/LetterPractice";
 import { ShapePractice } from "./pages/ShapePractice";
 import { CodePractice } from "./pages/CodePractice";
 
+const THEME_KEY = "cangjie-theme";
+
+function loadTheme(): "light" | "dark" {
+  try {
+    const v = localStorage.getItem(THEME_KEY);
+    if (v === "dark") return "dark";
+  } catch { /* ignore */ }
+  return "light";
+}
+
+function saveTheme(theme: "light" | "dark") {
+  localStorage.setItem(THEME_KEY, theme);
+}
+
 export default function App() {
+  const [theme, setTheme] = useState<"light" | "dark">(loadTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === "light" ? "dark" : "light";
+      saveTheme(next);
+      return next;
+    });
+  };
+
   return (
     <BrowserRouter>
       <nav className="nav">
@@ -16,6 +45,9 @@ export default function App() {
         <NavLink to="/code-practice" className={({ isActive }) => (isActive ? "nav-active" : "")}>
           倉頡拆碼練習
         </NavLink>
+        <button className="nav-theme-btn" onClick={toggleTheme}>
+          {theme === "light" ? "☾" : "☀"}
+        </button>
       </nav>
       <Routes>
         <Route path="/letter-practice" element={<LetterPractice />} />

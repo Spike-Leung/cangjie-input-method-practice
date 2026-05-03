@@ -280,7 +280,7 @@ export function CodePractice() {
       <h1>倉頡拆碼練習</h1>
       {missedMode && missedCount === 0 ? (
         <div className="quiz-card missed-editor">
-          <div className="quiz-display" style={{ fontSize: 24, color: "#999", fontWeight: 400 }}>
+          <div className="quiz-display-empty">
             暫無錯題
           </div>
         </div>
