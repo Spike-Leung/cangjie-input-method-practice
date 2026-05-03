@@ -541,7 +541,7 @@ body {
 }
 
 .keyboard-edit-hint-hidden {
-  display: none;
+  visibility: hidden;
 }
 
 .keyboard-row {
@@ -659,6 +659,10 @@ body {
   justify-content: space-between;
   width: 100%;
   margin-block-end: 10px;
+}
+
+.keyboard-edit-container:has(.keyboard-edit-actions:empty) .keyboard-edit-hint-hidden {
+  display: none;
 }
 
 .keyboard-edit-toggle {
