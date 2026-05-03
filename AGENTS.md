@@ -10,12 +10,7 @@ No test, lint, or format scripts are configured.
 
 ## Commit conventions
 
-**Atomic commits.** Each commit should be a single logical change. Do not bundle unrelated modifications together. Before committing, split work into independent commits:
-- Each UI component change = separate commit
-- Each behavior/logic change = separate commit
-- CSS style changes tied to a specific component change go in the same commit; standalone CSS refactors get their own commit
-
-Example: Moving a button into a component and removing a prompt line are two separate commits.
+**Atomic commits.** Each commit should be a single logical change. Do not bundle unrelated modifications together.
 
 ## Architecture
 
@@ -32,17 +27,18 @@ All CSS is in `src/index.css` (plain CSS, no framework).
 ## Critical: public/data/ image structure
 
 Images are served from `public/data/[KEY]/` where `KEY` is the uppercase Cangjie key letter (A–Y, no X/Z):
-
 ```
-public/data/A/A_00.png    (small, ~33-45px)
-public/data/A/A_01.png
-public/data/A/char_00.png (larger, ~88-104px)
+public/data/A/cjrm-a0.svg    (auxiliary shape)
+public/data/A/cjrm-a1.svg
+public/data/A/cjem-a0-1.svg  (character example)
 ...
 ```
+All images are SVG format, sourced from Wikimedia Commons (Category:Cangjie input method).
+The download script is `download_svgs.py` and the URL cache is at `/tmp/svg-urls.txt`.
 
-`src/data/auxiliaryShapes.ts` uses `import.meta.glob("/public/data/*/*.png", { eager: true, as: "url" })` to auto-discover images. The **directory name** is parsed as the Cangjie key. If a directory name has no entry in `cangjieLetters` (see `letterMap.ts`), images in that directory are silently skipped.
+`src/data/auxiliaryShapes.ts` uses `import.meta.glob("/public/data/*/*.svg", { eager: true, query: "?url", import: "default" })` to auto-discover images. The **directory name** is parsed as the Cangjie key. If a directory name has no entry in `cangjieLetters` (see `letterMap.ts`), images in that directory are silently skipped.
 
-**Adding images:** just place PNGs into any `public/data/[A-Y]/` directory. No code changes needed — `import.meta.glob` picks them up at build time.
+**Adding images:** just place SVGs into any `public/data/[A-Y]/` directory. No code changes needed — `import.meta.glob` picks them up at build time.
 
 **Do NOT add a hardcoded shape list** — the glob import replaces the old `raw` array. The old approach was removed in commit `761462f`.
 
