@@ -70,6 +70,13 @@ export default function App() {
         >
           AGPL-3.0
         </a>
+        <a
+          href="https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          倉頡輸入法
+        </a>
       </footer>
     </HashRouter>
   );

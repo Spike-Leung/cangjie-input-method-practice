@@ -173,7 +173,7 @@ body {
   border: 1px solid var(--border-default);
   border-radius: 6px;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 16px;
   padding: 4px 10px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
@@ -187,13 +187,12 @@ body {
 .site-footer {
   text-align: center;
   padding-block: 16px;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-muted);
 }
 
 .site-footer a {
   color: var(--text-secondary);
-  text-decoration: none;
   margin-inline-end: 8px;
 }
 
@@ -273,7 +272,7 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--text-secondary);
   cursor: pointer;
   user-select: none;
@@ -294,7 +293,7 @@ body {
   left: 16px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .quiz-bottom-links {
@@ -308,9 +307,8 @@ body {
 }
 
 .quiz-bottom-links a {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-secondary);
-  text-decoration: none;
   transition: color 0.2s;
 }
 
@@ -393,12 +391,12 @@ body {
 }
 
 .quiz-copy-btn {
-  padding: 1px 8px;
+  padding: 2px 12px;
   border: 1px solid var(--border-default);
   border-radius: 4px;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
@@ -414,12 +412,12 @@ body {
 }
 
 .quiz-mode-btn {
-  padding: 1px 8px;
+  padding: 2px 12px;
   border: 1px solid var(--border-default);
   border-radius: 4px;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
@@ -441,12 +439,12 @@ body {
 }
 
 .quiz-clear-btn {
-  padding: 1px 8px;
+  padding: 2px 12px;
   border: 1px solid var(--border-danger);
   border-radius: 4px;
   background: transparent;
   color: var(--text-wrong);
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -496,7 +494,7 @@ body {
 .code-slot-placeholder {
   position: absolute;
   top: 2px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-placeholder);
   font-weight: 400;
 }
@@ -504,6 +502,20 @@ body {
 .code-slot-input {
   font-size: 28px;
   font-weight: 600;
+}
+
+.code-notice {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.code-notice a {
+  color: var(--text-secondary);
+}
+
+.code-notice a:hover {
+  color: var(--accent-blue);
 }
 
 .keyboard {
@@ -523,13 +535,13 @@ body {
 }
 
 .keyboard-edit-hint {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--accent-blue);
   margin-bottom: 4px;
 }
 
 .keyboard-edit-hint-hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .keyboard-row {
@@ -599,7 +611,7 @@ body {
 }
 
 .key-en {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-key-en);
 }
 
@@ -655,7 +667,7 @@ body {
   border-radius: 6px;
   background: transparent;
   color: var(--accent-blue);
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -676,7 +688,7 @@ body {
   border-radius: 6px;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
@@ -693,12 +705,12 @@ body {
 @media (max-width: 720px) {
   .nav a {
     padding: 10px 12px;
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .nav-theme-btn {
     inset-inline-end: 8px;
-    font-size: 12px;
+    font-size: 16px;
     padding: 3px 8px;
   }
 
@@ -740,7 +752,7 @@ body {
   .quiz-card-left-actions {
     top: 8px;
     left: 8px;
-    gap: 4px;
+    gap: 6px;
   }
 
   .quiz-bottom-links {
@@ -753,7 +765,7 @@ body {
   }
 
   .missed-editor-title {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .missed-editor-bar {
@@ -766,7 +778,7 @@ body {
   }
 
   .missed-code {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .missed-empty {
@@ -849,21 +861,21 @@ body {
   }
 
   .keyboard-edit-hint {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .keyboard-edit-toggle {
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .keyboard-reset-btn {
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .site-footer {
     padding-block: 12px;
-    font-size: 11px;
+    font-size: 16px;
   }
 }
