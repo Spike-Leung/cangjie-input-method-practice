@@ -29,9 +29,9 @@ Three practice modes:
 
 | Mode | Route | What you practice |
 |------|-------|-------------------|
-| **Letter Practice** | `/letter-practice` | Map 24 Cangjie radicals to QWERTY keys (A–Y) |
-| **Shape Practice** | `/shape-practice` | Recognize 723 auxiliary shapes with weighted error review |
-| **Code Practice** | `/code-practice` | Decompose 6,000 common characters step by step |
+| **Letter Practice** | `/letter-practice` | Map 24 Cangjie radicals + X/Z special keys to QWERTY (26 keys) |
+| **Shape Practice** | `/shape-practice` | Recognize 741 auxiliary shapes with weighted error review (incl. 18 X-key shapes) |
+| **Code Practice** | `/code-practice` | Decompose 6,000 characters step by step, sorted by daily usage frequency |
 
 Additional features:
 
@@ -40,7 +40,7 @@ Additional features:
 - **Mobile support** — Fully responsive layout down to 375 px viewports.
 - **Hint toggle** — Shared across all three pages via localStorage. Space bar toggles hints anywhere.
 - **Keyboard visualization** — Color-coded key categories, numbered hint overlays, and correct/wrong highlighting.
-- **Dictionary link** — Each character links to [zdic.net](https://www.zdic.net/) for etymology and stroke order.
+- **Dictionary link** — Each character links to [zdic.net](https://www.zdic.net/) and [chidic.eduhk.hk](https://chidic.eduhk.hk/).
 - **Copy character** — One-click copy the current character to clipboard.
 
 ---
@@ -78,8 +78,8 @@ No CSS framework, no component library.
 
 ## Data Sources
 
-- **SVG shapes** — 723 images from Wikimedia Commons ([Category: Cangjie input method](https://commons.wikimedia.org/wiki/Category:Cangjie_input_method))
-- **Character codes** — 6,000 entries parsed from [RIME Cangjie5 dictionary](https://github.com/rime/rime-cangjie)
+- **SVG shapes** — 741 images from Wikimedia Commons ([Category: Cangjie input method](https://commons.wikimedia.org/wiki/Category:Cangjie_input_method)), including 18 X (difficult) key shapes
+- **Character codes** — 6,000 entries from [RIME Cangjie5 dictionary](https://github.com/rime/rime-cangjie), merged with [Jun Da corpus](https://lingua.mtsu.edu/chinese-computing/statistics/), [Zhihu corpus](https://github.com/forfudan/chinese-characters-frequency), and traditional-to-simplified mapping, sorted by daily usage frequency
 - Download scripts (`download_svgs.py`, `download_cangjie.py`) are included in the repository root.
 
 ---

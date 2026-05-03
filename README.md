@@ -29,9 +29,9 @@
 
 | 模式 | 路徑 | 練習內容 |
 |------|------|---------|
-| **字母鍵位練習** | `/letter-practice` | 24 個倉頡字母對應 QWERTY 鍵位（A–Y） |
-| **輔助字型練習** | `/shape-practice` | 723 個輔助字形，加權錯誤複習 |
-| **倉頡拆碼練習** | `/code-practice` | 逐步拆解 6000 個常用字 |
+| **字母鍵位練習** | `/letter-practice` | 24 個倉頡字母 + X/Z 特殊鍵位（共 26 鍵） |
+| **輔助字型練習** | `/shape-practice` | 741 個輔助字形（含 X 難鍵 18 個），加權錯誤複習 |
+| **倉頡拆碼練習** | `/code-practice` | 逐步拆解 6000 個常用字，按使用頻率排序 |
 
 其他功能：
 
@@ -40,7 +40,7 @@
 - **移動端支援** — 自適應佈局，最低支援 375px 螢幕。鍵盤按鍵、碼位槽、字型大小均等比例縮放。
 - **提示同步** — 三個頁面共用提示開關狀態（localStorage）。Space 鍵隨時切換。
 - **鍵盤視覺化** — 按鍵分色標記類別（哲理、筆畫、人體、字形），提示碼位序號疊加，正確／錯誤高亮。
-- **漢典連結** — 每個字連結到 [zdic.net](https://www.zdic.net/)，可查詢字源和筆順。
+- **漢典連結** — 每個字連結到 [zdic.net](https://www.zdic.net/) 和 [chidic.eduhk.hk](https://chidic.eduhk.hk/)，可查詢字源和筆順。
 - **複製文字** — 一鍵複製當前候選字到剪貼板。
 
 ---
@@ -78,8 +78,8 @@ npm run preview
 
 ## 資料來源
 
-- **輔助字形 SVG** — 723 張圖片來自 Wikimedia Commons（[Category: Cangjie input method](https://commons.wikimedia.org/wiki/Category:Cangjie_input_method)）
-- **拆碼字表** — 6000 個常用字編碼來自 [RIME 倉頡五代字典](https://github.com/rime/rime-cangjie)
+- **輔助字形 SVG** — 741 張圖片來自 Wikimedia Commons（[Category: Cangjie input method](https://commons.wikimedia.org/wiki/Category:Cangjie_input_method)），含 X（難）鍵 18 張
+- **拆碼字表** — 6000 個常用字編碼來自 [RIME 倉頡五代字典](https://github.com/rime/rime-cangjie)，合併 [Jun Da 語料字頻](https://lingua.mtsu.edu/chinese-computing/statistics/)、[知乎語料字頻](https://github.com/forfudan/chinese-characters-frequency) 及繁簡映射後按日常使用頻率排序
 - 下載腳本（`download_svgs.py`、`download_cangjie.py`）在專案根目錄。
 
 ---
