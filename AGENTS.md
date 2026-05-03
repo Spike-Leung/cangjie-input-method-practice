@@ -12,6 +12,8 @@ No test, lint, or format scripts are configured.
 
 **Atomic commits.** Each commit should be a single logical change. Do not bundle unrelated modifications together.
 
+**Do NOT auto-push.** Only `git push` when the user explicitly asks. Committing is local only by default.
+
 ## Architecture
 
 Single-page React app (React 18 + TypeScript 5.6 + Vite 6 + HashRouter).
@@ -91,18 +93,25 @@ Decomposes Chinese characters step by step using Cangjie codes. 6,000 common cha
 
 - File: `src/pages/CodePractice.tsx`
 - Code data: `src/data/cangjieChars.ts` (interface `CodeEntry { char, code }`)
+- **Data pipeline**: `download_cangjie.py` fetches RIME dict → merges Jun Da & Zhihu frequency lists via traditional-to-simplified mapping → sorts by daily-usage frequency → deduplicates (keeps first/preferred code per char) → top 6000 unique chars
+- Frequency data cached at `/tmp/cangjie-freq-cache.txt`
 - Multi-slot input with per-position green/red feedback
 - Backspace/Delete to erase last input; Space to toggle hint
-- Hint shows numbered overlay on keyboard keys in answer order
+- Hint shows numbered overlay on keyboard keys in answer order; correctly-completed positions drop from hint
 - Non-answer keys dimmed (45% opacity) when hint is active
 - Stats: localStorage key `"cangjie-code-stats"` — per-attempt correctness
 - Missed character tracking: after 2 consecutive wrong keystrokes, code added to `missedCodes` Set (localStorage key `"cangjie-code-missed"`)
 - "全部" / "錯題集(N)" mode toggle; missed editor with individual removal
-- Copy button copies current character; 漢典 link to zdic.net
+- Copy button copies current character; 漢典 link to zdic.net; 漢語字典 link to chidic.eduhk.hk
 
 ## Theme
 
 Light/dark mode via `data-theme` attribute on `<html>`. Toggle button (☾/☀) in nav bar. Preference persisted in localStorage key `"cangjie-theme"`. All colors defined as CSS custom properties.
+
+## Shared state
+
+- **Hint toggle**: `src/hooks/useHintState.ts` — shared across all three practice pages via localStorage key `"cangjie-hint-shown"`. Space bar toggles hints. Changing hint on one page persists to others.
+- **Footer**: `App.tsx` renders site-wide footer with GitHub link and AGPL-3.0 license link.
 
 ## Vite quirks
 

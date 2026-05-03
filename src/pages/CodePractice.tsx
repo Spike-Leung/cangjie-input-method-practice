@@ -191,6 +191,7 @@ export function CodePractice() {
   const hintMap: Record<string, number[]> = {};
   if (showHint) {
     code.split("").forEach((c, i) => {
+      if (results[i] === "correct") return;
       const k = c.toUpperCase();
       if (!hintMap[k]) hintMap[k] = [];
       hintMap[k].push(i + 1);
