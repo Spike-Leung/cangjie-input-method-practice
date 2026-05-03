@@ -64,10 +64,16 @@ export function LetterPractice() {
     forceRender((n) => n + 1);
   }, []);
 
-  const resetKeys = useCallback(() => {
-    const empty = new Set<string>();
-    saveDisabled(empty);
-    disabledKeys.current = empty;
+  const toggleAllKeys = useCallback(() => {
+    if (disabledKeys.current.size === 0) {
+      const all = new Set(Object.keys(cangjieLetters));
+      saveDisabled(all);
+      disabledKeys.current = all;
+    } else {
+      const empty = new Set<string>();
+      saveDisabled(empty);
+      disabledKeys.current = empty;
+    }
     forceRender((n) => n + 1);
   }, []);
 
@@ -127,6 +133,18 @@ export function LetterPractice() {
     if (!current) pickNext();
   }, [current, pickNext]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (editMode) return;
+      if (e.code === "Space") {
+        e.preventDefault();
+        setShowHint((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [editMode]);
+
   const display = current ? cangjieLetters[current] : "";
 
   return (
@@ -148,7 +166,7 @@ export function LetterPractice() {
         disabledKeys={disabledKeys.current}
         onToggleKey={toggleKey}
         onToggleEdit={() => setEditMode((v) => !v)}
-        onResetKeys={resetKeys}
+        onToggleAllKeys={toggleAllKeys}
       />
     </div>
   );

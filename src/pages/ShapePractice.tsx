@@ -1,52 +1,89 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard } from "../components/Keyboard";
 import { QuizCard } from "../components/QuizCard";
 import { useQuiz } from "../hooks/useQuiz";
-import { AUXILIARY_SHAPES, ShapeEntry } from "../data/auxiliaryShapes";
+import { AUXILIARY_SHAPES } from "../data/auxiliaryShapes";
+import { cangjieLetters } from "../data/letterMap";
 import { weightedPick } from "../utils/weightedRandom";
 
-const STORAGE_KEY = "cangjie-shape-stats";
+const STATS_KEY = "cangjie-shape-stats";
+const FILTER_KEY = "cangjie-shape-disabled";
 
-interface LetterStats {
+interface KeyStats {
   correct: number;
   total: number;
 }
 
-function loadStats(): Record<string, LetterStats> {
+function loadStats(): Record<string, KeyStats> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STATS_KEY);
     return raw ? JSON.parse(raw) : {};
   } catch {
     return {};
   }
 }
 
-function saveStats(stats: Record<string, LetterStats>) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+function saveStats(stats: Record<string, KeyStats>) {
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 }
 
-function buildWeightedItems(
-  shapes: ShapeEntry[],
-  stats: Record<string, LetterStats>
-): (ShapeEntry & { weight: number })[] {
-  return shapes.map((s) => {
-    const st = stats[s.key] ?? { correct: 0, total: 0 };
-    const errorRate = st.total > 0 ? (st.total - st.correct) / st.total : 0;
-    return { ...s, weight: 1 + errorRate * 6 };
-  });
+function loadDisabled(): Set<string> {
+  try {
+    const raw = localStorage.getItem(FILTER_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveDisabled(keys: Set<string>) {
+  localStorage.setItem(FILTER_KEY, JSON.stringify([...keys]));
 }
 
 export function ShapePractice() {
   const { current, lastResult, lastCorrectKey, lastWrongKey, next, answer } =
     useQuiz(AUXILIARY_SHAPES);
 
-  const letterStats = useRef<Record<string, LetterStats>>(loadStats());
-  const totalStats = useRef({ correct: 0, total: 0 });
+  const stats = useRef<Record<string, KeyStats>>(loadStats());
+  const disabledKeys = useRef<Set<string>>(loadDisabled());
+
+  const [editMode, setEditMode] = useState(false);
+  const [showHint, setShowHint] = useState(true);
+  const [, forceRender] = useState(0);
+
+  const toggleKey = useCallback((key: string) => {
+    const next = new Set(disabledKeys.current);
+    if (next.has(key)) next.delete(key);
+    else next.add(key);
+    saveDisabled(next);
+    disabledKeys.current = next;
+    forceRender((n) => n + 1);
+  }, []);
+
+  const toggleAllKeys = useCallback(() => {
+    if (disabledKeys.current.size === 0) {
+      const all = new Set(Object.keys(cangjieLetters));
+      saveDisabled(all);
+      disabledKeys.current = all;
+    } else {
+      const empty = new Set<string>();
+      saveDisabled(empty);
+      disabledKeys.current = empty;
+    }
+    forceRender((n) => n + 1);
+  }, []);
 
   const pickNext = useCallback(() => {
-    const weightedItems = buildWeightedItems(AUXILIARY_SHAPES, letterStats.current);
-    const pick = () => weightedPick(weightedItems);
-    next(pick);
+    const dk = disabledKeys.current;
+    const candidates = AUXILIARY_SHAPES.filter((s) => !dk.has(s.key));
+    if (candidates.length === 0) return;
+    const st = stats.current;
+    const weighted = candidates.map((s) => {
+      const ks = st[s.key] ?? { correct: 0, total: 0 };
+      const errorRate = ks.total > 0 ? (ks.total - ks.correct) / ks.total : 0;
+      return { ...s, weight: 1 + errorRate * 6 };
+    });
+    next(() => weightedPick(weighted));
   }, [next]);
 
   const handleKeyPress = useCallback(
@@ -56,12 +93,10 @@ export function ShapePractice() {
       const correctKey = current.key;
       const isCorrect = key === correctKey;
 
-      const ls = letterStats.current;
+      const ls = stats.current;
       if (!ls[correctKey]) ls[correctKey] = { correct: 0, total: 0 };
       ls[correctKey].total += 1;
       if (isCorrect) ls[correctKey].correct += 1;
-      totalStats.current.total += 1;
-      if (isCorrect) totalStats.current.correct += 1;
       saveStats(ls);
 
       if (isCorrect) {
@@ -81,14 +116,19 @@ export function ShapePractice() {
     if (!current) pickNext();
   }, [current, pickNext]);
 
-  const display = current ? current.letter : "";
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (editMode) return;
+      if (e.code === "Space") {
+        e.preventDefault();
+        setShowHint((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [editMode]);
 
-  const handleReset = () => {
-    letterStats.current = {};
-    totalStats.current = { correct: 0, total: 0 };
-    saveStats({});
-    pickNext();
-  };
+  const display = current ? current.letter : "";
 
   return (
     <div className="practice-page">
@@ -96,6 +136,9 @@ export function ShapePractice() {
       <QuizCard
         display={display}
         image={current?.image}
+        hint={current?.letter}
+        showHint={showHint}
+        onToggleHint={() => setShowHint((v) => !v)}
         lastResult={lastResult}
       />
       <Keyboard
@@ -103,10 +146,12 @@ export function ShapePractice() {
         highlightKey={lastResult === "correct" ? lastCorrectKey : null}
         highlightColor={lastResult === "correct" ? "correct" : null}
         wrongKey={lastResult === "wrong" ? lastWrongKey : null}
+        editMode={editMode}
+        disabledKeys={disabledKeys.current}
+        onToggleKey={toggleKey}
+        onToggleEdit={() => setEditMode((v) => !v)}
+        onToggleAllKeys={toggleAllKeys}
       />
-      <button className="reset-btn" onClick={handleReset}>
-        重置統計數據
-      </button>
     </div>
   );
 }
