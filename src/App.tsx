@@ -55,6 +55,22 @@ export default function App() {
         <Route path="/code-practice" element={<CodePractice />} />
         <Route path="*" element={<Navigate to="/letter-practice" replace />} />
       </Routes>
+      <footer className="site-footer">
+        <a
+          href="https://github.com/Spike-Leung/cangjie-input-method-practice"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://github.com/Spike-Leung/cangjie-input-method-practice/blob/main/LICENSE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          AGPL-3.0
+        </a>
+      </footer>
     </HashRouter>
   );
 }

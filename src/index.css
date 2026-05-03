@@ -184,6 +184,23 @@ body {
   color: var(--text-nav-hover);
 }
 
+.site-footer {
+  text-align: center;
+  padding-block: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.site-footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-inline-end: 8px;
+}
+
+.site-footer a:hover {
+  color: var(--accent-blue);
+}
+
 .practice-page {
   max-width: 720px;
   margin: 40px auto;
@@ -835,6 +852,11 @@ body {
 
   .keyboard-reset-btn {
     padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .site-footer {
+    padding-block: 12px;
     font-size: 11px;
   }
 }
