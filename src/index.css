@@ -119,6 +119,103 @@ body {
   gap: 10px;
 }
 
+.quiz-card-left-actions {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quiz-zdic-link {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 12px;
+  color: #999;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.quiz-zdic-link:hover {
+  color: #1976d2;
+}
+
+.missed-editor {
+  padding: 24px 28px;
+}
+
+.missed-editor-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.missed-editor-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.missed-empty {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+  padding-block: 40px;
+}
+
+.missed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.missed-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.missed-item:last-child {
+  border-bottom: none;
+}
+
+.missed-char {
+  font-size: 22px;
+  font-weight: 500;
+  width: 48px;
+  text-align: center;
+}
+
+.missed-code {
+  font-size: 16px;
+  color: #666;
+  flex: 1;
+}
+
+.missed-delete-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #ccc;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.missed-delete-btn:hover {
+  background: #ffebee;
+  color: #c62828;
+}
+
 .quiz-copy-btn {
   padding: 1px 8px;
   border: 1px solid #ccc;
@@ -138,6 +235,48 @@ body {
 .quiz-copy-btn.copied {
   border-color: #66bb6a;
   color: #66bb6a;
+}
+
+.quiz-mode-btn {
+  padding: 1px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent;
+  color: #999;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.quiz-mode-btn:hover:not(:disabled) {
+  border-color: #666;
+  color: #666;
+}
+
+.quiz-mode-btn.active {
+  border-color: #1976d2;
+  color: #1976d2;
+  background: #e3f2fd;
+}
+
+.quiz-mode-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.quiz-clear-btn {
+  padding: 1px 8px;
+  border: 1px solid #ef9a9a;
+  border-radius: 4px;
+  background: transparent;
+  color: #c62828;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.quiz-clear-btn:hover {
+  background: #ffebee;
 }
 
 .code-slots {
