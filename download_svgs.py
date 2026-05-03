@@ -33,6 +33,7 @@ key_patterns = [
     (r"^cjem-([a-z])\d+-\d+\.svg$", 1),
     (r"^cjr5m-([a-z])\d+\.svg$", 1),
     (r"^cjem-5([a-z])-\d+\.svg$", 1),
+    (r"^cjxm-", None),
 ]
 
 files_by_key = {}
@@ -43,7 +44,10 @@ for filename in url_map:
     for pattern, group in key_patterns:
         m = re.match(pattern, fname_lower)
         if m:
-            key = m.group(group).upper()
+            if group is not None:
+                key = m.group(group).upper()
+            else:
+                key = "X"
             break
     if not key or key < "A" or key > "Y":
         skipped += 1
