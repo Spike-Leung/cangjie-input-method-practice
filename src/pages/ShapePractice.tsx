@@ -87,6 +87,11 @@ export function ShapePractice() {
     next(() => weightedPick(weighted));
   }, [next]);
 
+  const toggleEdit = useCallback(() => {
+    setEditMode((v) => !v);
+    editMode && pickNext();
+  }, [editMode, pickNext]);
+
   const handleKeyPress = useCallback(
     (key: string) => {
       if (!current) return;
@@ -105,7 +110,7 @@ export function ShapePractice() {
         setTimeout(pickNext, 100);
       }
     },
-    [current, lastResult, answer, pickNext]
+    [current, lastResult, answer, pickNext],
   );
 
   useEffect(() => {
@@ -145,7 +150,7 @@ export function ShapePractice() {
         editMode={editMode}
         disabledKeys={disabledKeys.current}
         onToggleKey={toggleKey}
-        onToggleEdit={() => setEditMode((v) => !v)}
+        onToggleEdit={toggleEdit}
         onToggleAllKeys={toggleAllKeys}
       />
     </div>

@@ -46,7 +46,8 @@ function saveDisabled(keys: Set<string>) {
 }
 
 export function LetterPractice() {
-  const { current, lastResult, lastCorrectKey, lastWrongKey, next, answer } = useQuiz(LETTERS);
+  const { current, lastResult, lastCorrectKey, lastWrongKey, next, answer } =
+    useQuiz(LETTERS);
 
   const letterStats = useRef<Record<string, LetterStats>>(loadStats());
   const prev = useRef<string | null>(null);
@@ -122,8 +123,13 @@ export function LetterPractice() {
         setTimeout(pickNext, 100);
       }
     },
-    [current, lastResult, answer, pickNext]
+    [current, lastResult, answer, pickNext],
   );
+
+  const toggleEdit = useCallback(() => {
+    setEditMode((v) => !v);
+    editMode && pickNext();
+  }, [editMode, pickNext]);
 
   useEffect(() => {
     if (!current) pickNext();
@@ -161,7 +167,7 @@ export function LetterPractice() {
         editMode={editMode}
         disabledKeys={disabledKeys.current}
         onToggleKey={toggleKey}
-        onToggleEdit={() => setEditMode((v) => !v)}
+        onToggleEdit={toggleEdit}
         onToggleAllKeys={toggleAllKeys}
       />
     </div>
