@@ -337,7 +337,7 @@ export function CodePractice() {
             </a>
             為準。如果確認有誤，請
             <a
-              href="https://github.com/Spike-Leung/cangjie-input-method-practice/issues/new"
+              href="https://github.com/Spike-Leung/cangjie-input-method-practice/issues/new?template=code-error.yml"
               target="_blank"
               rel="noopener noreferrer"
             >
