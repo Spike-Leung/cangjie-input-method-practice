@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
 import { LetterPractice } from "./pages/LetterPractice";
 import { ShapePractice } from "./pages/ShapePractice";
 import { CodePractice } from "./pages/CodePractice";
@@ -34,7 +34,7 @@ export default function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <nav className="nav">
         <NavLink to="/letter-practice" className={({ isActive }) => (isActive ? "nav-active" : "")}>
           字母鍵位練習
@@ -55,6 +55,6 @@ export default function App() {
         <Route path="/code-practice" element={<CodePractice />} />
         <Route path="*" element={<Navigate to="/letter-practice" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
