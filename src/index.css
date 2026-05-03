@@ -147,7 +147,7 @@ body {
 .nav a {
   color: var(--text-nav);
   text-decoration: none;
-  padding: 14px 28px;
+  padding: 14px 22px;
   font-size: 16px;
   font-weight: 500;
   border-bottom: 3px solid transparent;
@@ -166,7 +166,7 @@ body {
 
 .nav-theme-btn {
   position: absolute;
-  inset-inline-end: 16px;
+  inset-inline-end: 12px;
   inset-block-start: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -284,7 +284,7 @@ body {
   right: 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .quiz-card-left-actions {
@@ -391,7 +391,7 @@ body {
 }
 
 .quiz-copy-btn {
-  padding: 2px 12px;
+  padding: 1px 8px;
   border: 1px solid var(--border-default);
   border-radius: 4px;
   background: transparent;
@@ -412,7 +412,7 @@ body {
 }
 
 .quiz-mode-btn {
-  padding: 2px 12px;
+  padding: 1px 8px;
   border: 1px solid var(--border-default);
   border-radius: 4px;
   background: transparent;
@@ -439,7 +439,7 @@ body {
 }
 
 .quiz-clear-btn {
-  padding: 2px 12px;
+  padding: 1px 8px;
   border: 1px solid var(--border-danger);
   border-radius: 4px;
   background: transparent;
@@ -704,14 +704,34 @@ body {
 
 @media (max-width: 720px) {
   .nav a {
-    padding: 10px 12px;
+    padding: 10px 8px;
     font-size: 16px;
   }
 
   .nav-theme-btn {
-    inset-inline-end: 8px;
-    font-size: 16px;
-    padding: 3px 8px;
+    position: fixed;
+    inset-block-end: 16px;
+    inset-inline-end: 16px;
+    inset-inline-start: auto;
+    inset-block-start: auto;
+    transform: none;
+    z-index: 100;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quiz-card-left-actions {
+    display: none;
+  }
+
+  .quiz-copy-btn {
+    display: none;
   }
 
   .practice-page {
@@ -746,7 +766,7 @@ body {
   .quiz-card-actions {
     top: 8px;
     right: 8px;
-    gap: 6px;
+    gap: 8px;
   }
 
   .quiz-card-left-actions {
