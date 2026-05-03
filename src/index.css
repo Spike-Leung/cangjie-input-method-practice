@@ -62,9 +62,9 @@ body {
 }
 
 .quiz-display {
-  font-size: 72px;
-  font-weight: 700;
-  min-height: 180px;
+  font-size: 160px;
+  font-weight: 400;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,10 +94,13 @@ body {
   margin-left: 0.12em;
 }
 
+.quiz-answer {
+  font-size: 28px;
+  color: #aaa;
+  min-height: 36px;
+}
+
 .quiz-hint-toggle {
-  position: absolute;
-  top: 12px;
-  right: 16px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -107,12 +110,93 @@ body {
   user-select: none;
 }
 
+.quiz-card-actions {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quiz-copy-btn {
+  padding: 1px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent;
+  color: #999;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.quiz-copy-btn:hover {
+  border-color: #666;
+  color: #666;
+}
+
+.quiz-copy-btn.copied {
+  border-color: #66bb6a;
+  color: #66bb6a;
+}
+
+.code-slots {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.code-slot {
+  width: 64px;
+  height: 72px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  position: relative;
+}
+
+.code-slot.correct {
+  border-color: #66bb6a;
+  color: #2e7d32;
+  background: #e8f5e9;
+}
+
+.code-slot.wrong {
+  border-color: #ef5350;
+  color: #c62828;
+  background: #ffebee;
+}
+
+.code-slot.current {
+  border-color: #90caf9;
+  box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.4);
+}
+
+.code-slot-placeholder {
+  position: absolute;
+  top: 2px;
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 400;
+}
+
+.code-slot-input {
+  font-size: 28px;
+  font-weight: 600;
+}
+
 .keyboard {
   position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 8px;
   padding: 16px 12px;
   transition: background 0.2s;
 }
@@ -135,7 +219,7 @@ body {
 
 .keyboard-row {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .keyboard-row:nth-child(3) {
@@ -160,6 +244,7 @@ body {
   flex-direction: column;
   transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
   user-select: none;
+  position: relative;
 }
 
 .key-cat-philosophy {
@@ -216,22 +301,29 @@ body {
   background: #ef9a9a !important;
 }
 
-.reset-btn {
-  margin-top: 24px;
-  padding: 10px 24px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fff;
-  color: #666;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+.key-hint {
+  outline: 3px solid #1565c0;
 }
 
-.reset-btn:hover {
-  background: #f44336;
-  color: #fff;
-  border-color: #f44336;
+.key-hint-nums {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0px;
+}
+
+.key-hint-num {
+  font-size: 13px;
+  color: #0d47a1;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.key-dimmed {
+  opacity: 0.45;
 }
 
 .keyboard-edit-container {
