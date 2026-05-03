@@ -293,6 +293,7 @@ export function CodePractice() {
           lastResult={null}
           copyText={current?.char ?? ""}
           zdicUrl={current ? `https://www.zdic.net/hans/${current.char}` : undefined}
+          chidicUrl={current ? `https://chidic.eduhk.hk/v.php?dicword=${encodeURIComponent(current.char)}` : undefined}
           leftActions={modeActions}
         />
       )}

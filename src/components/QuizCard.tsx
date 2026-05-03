@@ -11,6 +11,7 @@ interface QuizCardProps {
   extraActions?: ReactNode;
   leftActions?: ReactNode;
   zdicUrl?: string;
+  chidicUrl?: string;
 }
 
 export function QuizCard({
@@ -24,6 +25,7 @@ export function QuizCard({
   extraActions,
   leftActions,
   zdicUrl,
+  chidicUrl,
 }: QuizCardProps) {
   const [copied, setCopied] = useState(false);
 
@@ -68,15 +70,19 @@ export function QuizCard({
           {extraActions}
         </div>
       )}
-      {zdicUrl && (
-        <a
-          className="quiz-zdic-link"
-          href={zdicUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          漢典
-        </a>
+      {(chidicUrl || zdicUrl) && (
+        <div className="quiz-bottom-links">
+          {chidicUrl && (
+            <a href={chidicUrl} target="_blank" rel="noopener noreferrer">
+              漢語字典
+            </a>
+          )}
+          {zdicUrl && (
+            <a href={zdicUrl} target="_blank" rel="noopener noreferrer">
+              漢典
+            </a>
+          )}
+        </div>
       )}
     </div>
   );
