@@ -327,7 +327,7 @@ export function CodePractice() {
           </div>
 
           <div className="code-notice">
-            如果對編碼存疑，請點擊
+            如果對編碼存疑，請以
             <a
               href={current ? `https://chidic.eduhk.hk/v.php?dicword=${encodeURIComponent(current.char)}` : "https://chidic.eduhk.hk/"}
               target="_blank"
@@ -335,7 +335,7 @@ export function CodePractice() {
             >
               漢文庫典
             </a>
-            查詢，以漢文庫典為準。<br />如果確認有誤，請
+            為準。如果確認有誤，請
             <a
               href="https://github.com/Spike-Leung/cangjie-input-method-practice/issues/new"
               target="_blank"
