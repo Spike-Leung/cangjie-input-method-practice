@@ -7,8 +7,8 @@ export interface ShapeEntry {
 }
 
 const imageModules = import.meta.glob(
-  "/public/data/*/*.png",
-  { eager: true, as: "url" }
+  "/public/data/*/*.svg",
+  { eager: true, query: "?url", import: "default" }
 );
 
 export const auxiliaryShapes: ShapeEntry[] = Object.entries(imageModules)
