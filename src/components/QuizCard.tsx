@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 interface QuizCardProps {
   display: string;
@@ -8,6 +8,9 @@ interface QuizCardProps {
   onToggleHint?: () => void;
   lastResult: "correct" | "wrong" | null;
   copyText?: string;
+  extraActions?: ReactNode;
+  leftActions?: ReactNode;
+  zdicUrl?: string;
 }
 
 export function QuizCard({
@@ -18,6 +21,9 @@ export function QuizCard({
   onToggleHint,
   lastResult,
   copyText,
+  extraActions,
+  leftActions,
+  zdicUrl,
 }: QuizCardProps) {
   const [copied, setCopied] = useState(false);
 
@@ -30,6 +36,7 @@ export function QuizCard({
 
   return (
     <div className="quiz-card">
+      {leftActions && <div className="quiz-card-left-actions">{leftActions}</div>}
       <div className={`quiz-display ${lastResult}`}>
         {image ? (
           <img src={image} alt={display} />
@@ -38,8 +45,16 @@ export function QuizCard({
         )}
       </div>
       {hint && showHint && <div className="quiz-answer">{hint}</div>}
-      {(onToggleHint || copyText) && (
+      {(onToggleHint || copyText || extraActions) && (
         <div className="quiz-card-actions">
+          {copyText && (
+            <button
+              className={`quiz-copy-btn ${copied ? "copied" : ""}`}
+              onClick={handleCopy}
+            >
+              {copied ? "✓ 已複製" : "複製"}
+            </button>
+          )}
           {onToggleHint && (
             <label className="quiz-hint-toggle">
               <input
@@ -50,15 +65,18 @@ export function QuizCard({
               提示(空格切換)
             </label>
           )}
-          {copyText && (
-            <button
-              className={`quiz-copy-btn ${copied ? "copied" : ""}`}
-              onClick={handleCopy}
-            >
-              {copied ? "✓ 已複製" : "複製"}
-            </button>
-          )}
+          {extraActions}
         </div>
+      )}
+      {zdicUrl && (
+        <a
+          className="quiz-zdic-link"
+          href={zdicUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          漢典
+        </a>
       )}
     </div>
   );
