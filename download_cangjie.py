@@ -168,6 +168,10 @@ print(f"Parsed {len(entries)} Cangjie entries")
 DEFAULT_FREQ = 500
 entries.sort(key=lambda x: -freq.get(x[0], DEFAULT_FREQ))
 
+# --- Deduplicate: keep first occurrence for each character ---
+seen = set()
+entries = [e for e in entries if e[0] not in seen and not seen.add(e[0])]
+
 # --- Take top MAX_CHARS ---
 entries = entries[:MAX_CHARS]
 print(f"Selected top {len(entries)} by frequency")
