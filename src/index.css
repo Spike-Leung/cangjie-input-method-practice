@@ -740,7 +740,7 @@ body {
 
   .practice-page {
     margin: 16px auto;
-    padding: 0 12px;
+    padding: 0 2px;
   }
 
   .practice-page h1 {
@@ -840,7 +840,7 @@ body {
   }
 
   .keyboard-row {
-    gap: 4px;
+    gap: 6px;
   }
 
   .keyboard-row:nth-child(3) {
