@@ -4810,7 +4810,7 @@ export const CODE_CHARS: CodeEntry[] = [
   { char: '蛊', code: 'libt' },
   { char: '焘', code: 'qif' },
   { char: '嘚', code: 'rhoi' },
-  { char: '瘟', code: 'kabt' },
+  { char: '瘟', code: 'kwot' },
   { char: '絢', code: 'vfpa' },
   { char: '绚', code: 'vmpa' },
   { char: '玮', code: 'mgqs' },
