@@ -7,6 +7,7 @@ interface KeyboardProps {
   highlightColor: "correct" | "wrong" | null;
   wrongKey: string | null;
   editMode?: boolean;
+  showDeleteKey?: boolean;
   disabledKeys?: Set<string>;
   onToggleKey?: (key: string) => void;
   onToggleEdit?: () => void;
@@ -17,7 +18,7 @@ interface KeyboardProps {
 const ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-  ["Z", "X", "C", "V", "B", "N", "M"],
+  ["Z", "X", "C", "V", "B", "N", "M", "⌫"],
 ];
 
 export function Keyboard({
@@ -26,6 +27,7 @@ export function Keyboard({
   highlightColor,
   wrongKey,
   editMode,
+  showDeleteKey,
   disabledKeys,
   onToggleKey,
   onToggleEdit,
@@ -74,6 +76,8 @@ export function Keyboard({
       {ROWS.map((row, ri) => (
         <div key={ri} className="keyboard-row">
           {row.map((key) => {
+            if (key === "⌫" && !showDeleteKey) return;
+
             const hasMapping = !!cangjieLetters[key];
             const isFiltered = disabledKeys?.has(key);
             const isWrong = key === wrongKey;
@@ -89,7 +93,8 @@ export function Keyboard({
             const hintNums = hintKeys?.[key];
             const hintClass = hintNums?.length ? "key-hint" : "";
             const hasHints = hintKeys && Object.keys(hintKeys).length > 0;
-            const dimmedClass = !editMode && hasHints && !hintNums?.length ? "key-dimmed" : "";
+            const dimmedClass =
+              !editMode && hasHints && !hintNums?.length ? "key-dimmed" : "";
 
             if (editMode) {
               return (
@@ -106,7 +111,9 @@ export function Keyboard({
                   {hintNums && (
                     <span className="key-hint-nums">
                       {hintNums.map((n) => (
-                        <span key={n} className="key-hint-num">{n}</span>
+                        <span key={n} className="key-hint-num">
+                          {n}
+                        </span>
                       ))}
                     </span>
                   )}
@@ -126,7 +133,9 @@ export function Keyboard({
                 {hintNums && (
                   <span className="key-hint-nums">
                     {hintNums.map((n) => (
-                      <span key={n} className="key-hint-num">{n}</span>
+                      <span key={n} className="key-hint-num">
+                        {n}
+                      </span>
                     ))}
                   </span>
                 )}

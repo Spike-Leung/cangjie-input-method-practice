@@ -98,6 +98,13 @@ export function CodePractice() {
       const codeLen = code.length;
       const pos = inputs.length;
 
+      if (key === "⌫") {
+        if (inputs.length === 0) return;
+        setInputs((prev) => prev.slice(0, -1));
+        setResults((prev) => prev.slice(0, -1));
+        return;
+      }
+
       if (pos >= codeLen) {
         if (results.some((r) => r === "wrong")) {
           setInputs([key]);
@@ -108,7 +115,10 @@ export function CodePractice() {
 
       const isCorrect = key === code[pos].toUpperCase();
       const newInputs = [...inputs, key];
-      const newResults = [...results, isCorrect ? "correct" : "wrong"] as ("correct" | "wrong")[];
+      const newResults = [...results, isCorrect ? "correct" : "wrong"] as (
+        | "correct"
+        | "wrong"
+      )[];
       setInputs(newInputs);
       setResults(newResults);
 
@@ -117,13 +127,19 @@ export function CodePractice() {
       } else {
         consecutiveWrongs.current += 1;
         attemptHadWrong.current = true;
-        if (consecutiveWrongs.current >= MISSED_THRESHOLD && !missedCodes.current.has(code)) {
+        if (
+          consecutiveWrongs.current >= MISSED_THRESHOLD &&
+          !missedCodes.current.has(code)
+        ) {
           missedCodes.current.add(code);
           saveMissedCodes(missedCodes.current);
         }
       }
 
-      if (newResults.length === codeLen && newResults.every((r) => r === "correct")) {
+      if (
+        newResults.length === codeLen &&
+        newResults.every((r) => r === "correct")
+      ) {
         const ls = stats.current;
         if (!ls[code]) ls[code] = { correct: 0, total: 0 };
         ls[code].total += 1;
@@ -132,7 +148,7 @@ export function CodePractice() {
         setTimeout(pickNext, 100);
       }
     },
-    [current, inputs, results, pickNext]
+    [current, inputs, results, pickNext],
   );
 
   const clearMissed = useCallback(() => {
@@ -142,14 +158,17 @@ export function CodePractice() {
     if (!current) pickNext();
   }, [current, pickNext]);
 
-  const removeMissed = useCallback((code: string) => {
-    missedCodes.current.delete(code);
-    saveMissedCodes(missedCodes.current);
-    if (missedCodes.current.size === 0 && missedMode) {
-      setMissedMode(false);
-    }
-    forceRender((n) => n + 1);
-  }, [missedMode]);
+  const removeMissed = useCallback(
+    (code: string) => {
+      missedCodes.current.delete(code);
+      saveMissedCodes(missedCodes.current);
+      if (missedCodes.current.size === 0 && missedMode) {
+        setMissedMode(false);
+      }
+      forceRender((n) => n + 1);
+    },
+    [missedMode],
+  );
 
   useEffect(() => {
     if (!current) pickNext();
@@ -226,7 +245,10 @@ export function CodePractice() {
         </button>
       )}
       {missedCount > 0 && (
-        <button className="quiz-mode-btn" onClick={() => setShowMissedEditor(true)}>
+        <button
+          className="quiz-mode-btn"
+          onClick={() => setShowMissedEditor(true)}
+        >
           編輯錯題
         </button>
       )}
@@ -249,7 +271,10 @@ export function CodePractice() {
         <div className="quiz-card missed-editor">
           <div className="missed-editor-bar">
             <span className="missed-editor-title">錯題集 ({items.length})</span>
-            <button className="quiz-mode-btn" onClick={() => setShowMissedEditor(false)}>
+            <button
+              className="quiz-mode-btn"
+              onClick={() => setShowMissedEditor(false)}
+            >
               返回練習
             </button>
           </div>
@@ -281,9 +306,7 @@ export function CodePractice() {
       <h1>倉頡拆碼練習</h1>
       {missedMode && missedCount === 0 ? (
         <div className="quiz-card missed-editor">
-          <div className="quiz-display-empty">
-            暫無錯題
-          </div>
+          <div className="quiz-display-empty">暫無錯題</div>
         </div>
       ) : (
         <QuizCard
@@ -293,7 +316,9 @@ export function CodePractice() {
           onToggleHint={toggleHint}
           lastResult={null}
           copyText={current?.char ?? ""}
-          zdicUrl={current ? `https://www.zdic.net/hans/${current.char}` : undefined}
+          zdicUrl={
+            current ? `https://www.zdic.net/hans/${current.char}` : undefined
+          }
           leftActions={modeActions}
         />
       )}
@@ -303,20 +328,27 @@ export function CodePractice() {
           <div className="code-slots">
             {Array.from({ length: codeLen }).map((_, i) => {
               const rawInput = inputs[i] ?? "";
-              const input = rawInput ? cangjieLetters[rawInput] || rawInput : "";
-              const result = results[i];
-              const placeholder = showHint && !rawInput
-                ? cangjieLetters[code[i].toUpperCase()] || code[i]
+              const input = rawInput
+                ? cangjieLetters[rawInput] || rawInput
                 : "";
-              const slotClass = result === "correct"
-                ? "correct"
-                : result === "wrong"
-                  ? "wrong"
+              const result = results[i];
+              const placeholder =
+                showHint && !rawInput
+                  ? cangjieLetters[code[i].toUpperCase()] || code[i]
                   : "";
+              const slotClass =
+                result === "correct"
+                  ? "correct"
+                  : result === "wrong"
+                    ? "wrong"
+                    : "";
               const cursorClass = i === inputs.length ? "current" : "";
 
               return (
-                <div key={i} className={`code-slot ${cursorClass} ${slotClass}`}>
+                <div
+                  key={i}
+                  className={`code-slot ${cursorClass} ${slotClass}`}
+                >
                   {placeholder && !rawInput && (
                     <span className="code-slot-placeholder">{placeholder}</span>
                   )}
@@ -329,7 +361,11 @@ export function CodePractice() {
           <div className="code-notice">
             如果對編碼存疑，請以
             <a
-              href={current ? `https://chidic.eduhk.hk/v.php?dicword=${encodeURIComponent(current.char)}` : "https://chidic.eduhk.hk/"}
+              href={
+                current
+                  ? `https://chidic.eduhk.hk/v.php?dicword=${encodeURIComponent(current.char)}`
+                  : "https://chidic.eduhk.hk/"
+              }
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -351,6 +387,7 @@ export function CodePractice() {
             highlightKey={null}
             highlightColor={null}
             wrongKey={null}
+            showDeleteKey={true}
             hintKeys={hintMap}
           />
         </>
