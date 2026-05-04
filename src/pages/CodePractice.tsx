@@ -359,7 +359,7 @@ export function CodePractice() {
           </div>
 
           <div className="code-notice">
-            如果對編碼存疑，請以
+            如果對編碼存疑(部分字因為字體可能存在差异)，請以
             <a
               href={
                 current
@@ -371,7 +371,7 @@ export function CodePractice() {
             >
               漢文庫典
             </a>
-            為準。如果確認有誤，請
+            和你能打出的字碼為準。<br/>如果確認有誤，請
             <a
               href="https://github.com/Spike-Leung/cangjie-input-method-practice/issues/new?template=code-error.yml"
               target="_blank"
