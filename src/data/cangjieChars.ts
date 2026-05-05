@@ -3790,7 +3790,7 @@ export const CODE_CHARS: CodeEntry[] = [
   { char: '咯', code: 'rher' },
   { char: '啰', code: 'rwln' },
   { char: '瞅', code: 'buhdf' },
-  { char: '蘑', code: 'ticr' },
+  { char: '蘑', code: 'tidr' },
   { char: '窺', code: 'jcqou' },
   { char: '窥', code: 'jcqou' },
   { char: '谍', code: 'ivptd' },
