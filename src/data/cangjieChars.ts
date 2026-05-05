@@ -4073,7 +4073,7 @@ export const CODE_CHARS: CodeEntry[] = [
   { char: '晦', code: 'aowy' },
   { char: '坤', code: 'glwl' },
   { char: '佑', code: 'okr' },
-  { char: '靡', code: 'iclmy' },
+  { char: '靡', code: 'idlmy' },
   { char: '擲', code: 'qtkl' },
   { char: '掷', code: 'qtkl' },
   { char: '枢', code: 'dsk' },
