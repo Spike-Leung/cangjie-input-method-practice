@@ -4696,7 +4696,7 @@ export const CODE_CHARS: CodeEntry[] = [
   { char: '淤', code: 'eysy' },
   { char: '舷', code: 'hyyvi' },
   { char: '鑫', code: 'ccc' },
-  { char: '膳', code: 'btgr' },
+  { char: '膳', code: 'bttr' },
   { char: '鬢', code: 'shjmc' },
   { char: '鬓', code: 'shjoc' },
   { char: '烊', code: 'ftq' },
