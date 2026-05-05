@@ -359,7 +359,7 @@ export function CodePractice() {
           </div>
 
           <div className="code-notice">
-            如果對編碼存疑(部分字因為字體可能存在差异)，請以
+            如果對編碼存疑(部分字可能存在字體差异、輸入法差异)，請以
             <a
               href={
                 current
