@@ -4258,7 +4258,7 @@ export const CODE_CHARS: CodeEntry[] = [
   { char: '圭', code: 'gg' },
   { char: '嬉', code: 'vgrr' },
   { char: '焕', code: 'fnbk' },
-  { char: '蚕', code: 'hklmi' },
+  { char: '蚕', code: 'mklmi' },
   { char: '蠶', code: 'muali' },
   { char: '嘶', code: 'rtcl' },
   { char: '惺', code: 'pahm' },
