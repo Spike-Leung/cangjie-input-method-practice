@@ -344,6 +344,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
+  overflow: auto;
+  max-height: 55vh;
 }
 
 .missed-item {
