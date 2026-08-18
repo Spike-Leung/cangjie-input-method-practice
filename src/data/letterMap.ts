@@ -29,6 +29,10 @@ export const cangjieLetters: Record<string, string> = {
 };
 
 export const LETTERS = Object.keys(cangjieLetters);
+export const LettersNoBackspace = Object.keys(cangjieLetters).filter((key) => key !== "⌫");
+export const CangjieLettersNoBackspace = Object.fromEntries(
+  Object.entries(cangjieLetters).filter(([key]) => key !== "⌫")
+);
 
 export type CangjieCategory = "philosophy" | "stroke" | "body" | "shape" | "special" | "delete";
 

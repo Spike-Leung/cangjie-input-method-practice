@@ -4,7 +4,7 @@ import { QuizCard } from "../components/QuizCard";
 import { useQuiz } from "../hooks/useQuiz";
 import { useHintState } from "../hooks/useHintState";
 import { AUXILIARY_SHAPES } from "../data/auxiliaryShapes";
-import { cangjieLetters } from "../data/letterMap";
+import { CangjieLettersNoBackspace } from "../data/letterMap";
 import { weightedPick } from "../utils/weightedRandom";
 
 const STATS_KEY = "cangjie-shape-stats";
@@ -63,7 +63,7 @@ export function ShapePractice() {
 
   const toggleAllKeys = useCallback(() => {
     if (disabledKeys.current.size === 0) {
-      const all = new Set(Object.keys(cangjieLetters));
+      const all = new Set(Object.keys(CangjieLettersNoBackspace));
       saveDisabled(all);
       disabledKeys.current = all;
     } else {

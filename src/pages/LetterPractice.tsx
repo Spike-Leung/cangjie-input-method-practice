@@ -3,7 +3,7 @@ import { Keyboard } from "../components/Keyboard";
 import { QuizCard } from "../components/QuizCard";
 import { useQuiz } from "../hooks/useQuiz";
 import { useHintState } from "../hooks/useHintState";
-import { LETTERS, cangjieLetters, getKey } from "../data/letterMap";
+import { LettersNoBackspace, CangjieLettersNoBackspace, getKey } from "../data/letterMap";
 import { weightedPick } from "../utils/weightedRandom";
 
 const STATS_KEY = "cangjie-letter-stats";
@@ -47,7 +47,7 @@ function saveDisabled(keys: Set<string>) {
 
 export function LetterPractice() {
   const { current, lastResult, lastCorrectKey, lastWrongKey, next, answer } =
-    useQuiz(LETTERS);
+    useQuiz(LettersNoBackspace);
 
   const letterStats = useRef<Record<string, LetterStats>>(loadStats());
   const prev = useRef<string | null>(null);
@@ -68,7 +68,7 @@ export function LetterPractice() {
 
   const toggleAllKeys = useCallback(() => {
     if (disabledKeys.current.size === 0) {
-      const all = new Set(Object.keys(cangjieLetters));
+      const all = new Set(Object.keys(CangjieLettersNoBackspace));
       saveDisabled(all);
       disabledKeys.current = all;
     } else {
@@ -83,7 +83,7 @@ export function LetterPractice() {
     const exclude = prev.current;
     const stats = letterStats.current;
     const dk = disabledKeys.current;
-    let candidates = LETTERS.filter((l) => !dk.has(l));
+    let candidates = LettersNoBackspace.filter((l) => !dk.has(l));
     if (candidates.length > 1 && exclude) {
       const withoutPrev = candidates.filter((l) => l !== exclude);
       if (withoutPrev.length > 0) candidates = withoutPrev;
@@ -109,7 +109,7 @@ export function LetterPractice() {
     (key: string) => {
       if (!current) return;
       if (lastResult === "correct") return;
-      const correctKey = getKey(cangjieLetters[current]);
+      const correctKey = getKey(CangjieLettersNoBackspace[current]);
       const isCorrect = key === correctKey;
 
       const ls = letterStats.current;
@@ -147,7 +147,7 @@ export function LetterPractice() {
     return () => window.removeEventListener("keydown", handler);
   }, [editMode]);
 
-  const display = current ? cangjieLetters[current] : "";
+  const display = current ? CangjieLettersNoBackspace[current] : "";
 
   return (
     <div className="practice-page">
