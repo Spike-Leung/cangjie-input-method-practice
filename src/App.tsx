@@ -64,18 +64,18 @@ export default function App() {
           GitHub
         </a>
         <a
-          href="https://github.com/Spike-Leung/cangjie-input-method-practice/blob/main/LICENSE"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          AGPL-3.0
-        </a>
-        <a
           href="https://zh.wikibooks.org/wiki/%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95"
           target="_blank"
           rel="noopener noreferrer"
         >
-          倉頡輸入法
+          倉頡輸入法 (教程)
+        </a>
+        <a
+          href="https://taxodium.ink/get-started-with-cangjie-input-method.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          上手倉頡輸入法
         </a>
       </footer>
     </HashRouter>
